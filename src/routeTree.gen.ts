@@ -9,6 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShopProfileRouteImport } from './routes/shop-profile'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PointsRouteImport } from './routes/points'
+import { Route as InviteRouteImport } from './routes/invite'
+import { Route as AgreementRouteImport } from './routes/agreement'
 import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welcome'
@@ -18,7 +23,33 @@ import { Route as OnboardingFeaturesRouteImport } from './routes/onboarding.feat
 import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
 import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
 import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
+import { Route as FeatureRouteImport } from './routes/feature.'
 
+const ShopProfileRoute = ShopProfileRouteImport.update({
+  id: '/shop-profile',
+  path: '/shop-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PointsRoute = PointsRouteImport.update({
+  id: '/points',
+  path: '/points',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgreementRoute = AgreementRouteImport.update({
+  id: '/agreement',
+  path: '/agreement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsRoute = TabsRouteImport.update({
   id: '/_tabs',
   getParentRoute: () => rootRouteImport,
@@ -63,9 +94,20 @@ const TabsAssetsRoute = TabsAssetsRouteImport.update({
   path: '/assets',
   getParentRoute: () => TabsRoute,
 } as any)
+const FeatureRoute = FeatureRouteImport.update({
+  id: '/feature/',
+  path: '/feature/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature/': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
@@ -76,6 +118,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
@@ -88,6 +136,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_tabs': typeof TabsRouteWithChildren
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature/': typeof FeatureRoute
   '/_tabs/assets': typeof TabsAssetsRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/mine': typeof TabsMineRoute
@@ -100,6 +154,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature/'
     | '/assets'
     | '/home'
     | '/mine'
@@ -110,6 +170,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature'
     | '/assets'
     | '/home'
     | '/mine'
@@ -121,6 +187,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_tabs'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature/'
     | '/_tabs/assets'
     | '/_tabs/home'
     | '/_tabs/mine'
@@ -133,6 +205,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TabsRoute: typeof TabsRouteWithChildren
+  AgreementRoute: typeof AgreementRoute
+  InviteRoute: typeof InviteRoute
+  PointsRoute: typeof PointsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ShopProfileRoute: typeof ShopProfileRoute
+  FeatureRoute: typeof FeatureRoute
   OnboardingFeaturesRoute: typeof OnboardingFeaturesRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
   OnboardingShopRoute: typeof OnboardingShopRoute
@@ -141,6 +219,41 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shop-profile': {
+      id: '/shop-profile'
+      path: '/shop-profile'
+      fullPath: '/shop-profile'
+      preLoaderRoute: typeof ShopProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/points': {
+      id: '/points'
+      path: '/points'
+      fullPath: '/points'
+      preLoaderRoute: typeof PointsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agreement': {
+      id: '/agreement'
+      path: '/agreement'
+      fullPath: '/agreement'
+      preLoaderRoute: typeof AgreementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs': {
       id: '/_tabs'
       path: ''
@@ -204,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsAssetsRouteImport
       parentRoute: typeof TabsRoute
     }
+    '/feature/': {
+      id: '/feature/'
+      path: '/feature'
+      fullPath: '/feature/'
+      preLoaderRoute: typeof FeatureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -224,6 +344,12 @@ const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TabsRoute: TabsRouteWithChildren,
+  AgreementRoute: AgreementRoute,
+  InviteRoute: InviteRoute,
+  PointsRoute: PointsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ShopProfileRoute: ShopProfileRoute,
+  FeatureRoute: FeatureRoute,
   OnboardingFeaturesRoute: OnboardingFeaturesRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
   OnboardingShopRoute: OnboardingShopRoute,
