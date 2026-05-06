@@ -29,11 +29,11 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { name: "theme-color", content: "#fc9730" },
+      { title: "阿旺 - 用阿旺,生意旺" },
+      { name: "description", content: "面向门店商家的 AI 内容创作助手,一键生成朋友圈图文、海报、小红书封面" },
+      { property: "og:title", content: "阿旺 - 用阿旺,生意旺" },
+      { property: "og:description", content: "门店商家的 AI 内容助手" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -57,7 +57,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <div id="app-shell">{children}</div>
         <Scripts />
       </body>
     </html>

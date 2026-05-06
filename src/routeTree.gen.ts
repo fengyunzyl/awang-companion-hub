@@ -9,38 +9,258 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShopProfileRouteImport } from './routes/shop-profile'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PointsRouteImport } from './routes/points'
+import { Route as InviteRouteImport } from './routes/invite'
+import { Route as AgreementRouteImport } from './routes/agreement'
+import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welcome'
+import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
+import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
+import { Route as OnboardingFeaturesRouteImport } from './routes/onboarding.features'
+import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
+import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
+import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
+import { Route as FeatureRouteImport } from './routes/feature.'
 
+const ShopProfileRoute = ShopProfileRouteImport.update({
+  id: '/shop-profile',
+  path: '/shop-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PointsRoute = PointsRouteImport.update({
+  id: '/points',
+  path: '/points',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgreementRoute = AgreementRouteImport.update({
+  id: '/agreement',
+  path: '/agreement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsRoute = TabsRouteImport.update({
+  id: '/_tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingWelcomeRoute = OnboardingWelcomeRouteImport.update({
+  id: '/onboarding/welcome',
+  path: '/onboarding/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingShopRoute = OnboardingShopRouteImport.update({
+  id: '/onboarding/shop',
+  path: '/onboarding/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRewardRoute = OnboardingRewardRouteImport.update({
+  id: '/onboarding/reward',
+  path: '/onboarding/reward',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingFeaturesRoute = OnboardingFeaturesRouteImport.update({
+  id: '/onboarding/features',
+  path: '/onboarding/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsMineRoute = TabsMineRouteImport.update({
+  id: '/mine',
+  path: '/mine',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsHomeRoute = TabsHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsAssetsRoute = TabsAssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
+  getParentRoute: () => TabsRoute,
+} as any)
+const FeatureRoute = FeatureRouteImport.update({
+  id: '/feature/',
+  path: '/feature/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature/': typeof FeatureRoute
+  '/assets': typeof TabsAssetsRoute
+  '/home': typeof TabsHomeRoute
+  '/mine': typeof TabsMineRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
+  '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature': typeof FeatureRoute
+  '/assets': typeof TabsAssetsRoute
+  '/home': typeof TabsHomeRoute
+  '/mine': typeof TabsMineRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
+  '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_tabs': typeof TabsRouteWithChildren
+  '/agreement': typeof AgreementRoute
+  '/invite': typeof InviteRoute
+  '/points': typeof PointsRoute
+  '/privacy': typeof PrivacyRoute
+  '/shop-profile': typeof ShopProfileRoute
+  '/feature/': typeof FeatureRoute
+  '/_tabs/assets': typeof TabsAssetsRoute
+  '/_tabs/home': typeof TabsHomeRoute
+  '/_tabs/mine': typeof TabsMineRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
+  '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature/'
+    | '/assets'
+    | '/home'
+    | '/mine'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature'
+    | '/assets'
+    | '/home'
+    | '/mine'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
+  id:
+    | '__root__'
+    | '/'
+    | '/_tabs'
+    | '/agreement'
+    | '/invite'
+    | '/points'
+    | '/privacy'
+    | '/shop-profile'
+    | '/feature/'
+    | '/_tabs/assets'
+    | '/_tabs/home'
+    | '/_tabs/mine'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TabsRoute: typeof TabsRouteWithChildren
+  AgreementRoute: typeof AgreementRoute
+  InviteRoute: typeof InviteRoute
+  PointsRoute: typeof PointsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ShopProfileRoute: typeof ShopProfileRoute
+  FeatureRoute: typeof FeatureRoute
+  OnboardingFeaturesRoute: typeof OnboardingFeaturesRoute
+  OnboardingRewardRoute: typeof OnboardingRewardRoute
+  OnboardingShopRoute: typeof OnboardingShopRoute
+  OnboardingWelcomeRoute: typeof OnboardingWelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shop-profile': {
+      id: '/shop-profile'
+      path: '/shop-profile'
+      fullPath: '/shop-profile'
+      preLoaderRoute: typeof ShopProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/points': {
+      id: '/points'
+      path: '/points'
+      fullPath: '/points'
+      preLoaderRoute: typeof PointsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agreement': {
+      id: '/agreement'
+      path: '/agreement'
+      fullPath: '/agreement'
+      preLoaderRoute: typeof AgreementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_tabs': {
+      id: '/_tabs'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +268,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/welcome': {
+      id: '/onboarding/welcome'
+      path: '/onboarding/welcome'
+      fullPath: '/onboarding/welcome'
+      preLoaderRoute: typeof OnboardingWelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/shop': {
+      id: '/onboarding/shop'
+      path: '/onboarding/shop'
+      fullPath: '/onboarding/shop'
+      preLoaderRoute: typeof OnboardingShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/reward': {
+      id: '/onboarding/reward'
+      path: '/onboarding/reward'
+      fullPath: '/onboarding/reward'
+      preLoaderRoute: typeof OnboardingRewardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/features': {
+      id: '/onboarding/features'
+      path: '/onboarding/features'
+      fullPath: '/onboarding/features'
+      preLoaderRoute: typeof OnboardingFeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_tabs/mine': {
+      id: '/_tabs/mine'
+      path: '/mine'
+      fullPath: '/mine'
+      preLoaderRoute: typeof TabsMineRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/home': {
+      id: '/_tabs/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof TabsHomeRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/assets': {
+      id: '/_tabs/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof TabsAssetsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/feature/': {
+      id: '/feature/'
+      path: '/feature'
+      fullPath: '/feature/'
+      preLoaderRoute: typeof FeatureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface TabsRouteChildren {
+  TabsAssetsRoute: typeof TabsAssetsRoute
+  TabsHomeRoute: typeof TabsHomeRoute
+  TabsMineRoute: typeof TabsMineRoute
+}
+
+const TabsRouteChildren: TabsRouteChildren = {
+  TabsAssetsRoute: TabsAssetsRoute,
+  TabsHomeRoute: TabsHomeRoute,
+  TabsMineRoute: TabsMineRoute,
+}
+
+const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TabsRoute: TabsRouteWithChildren,
+  AgreementRoute: AgreementRoute,
+  InviteRoute: InviteRoute,
+  PointsRoute: PointsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ShopProfileRoute: ShopProfileRoute,
+  FeatureRoute: FeatureRoute,
+  OnboardingFeaturesRoute: OnboardingFeaturesRoute,
+  OnboardingRewardRoute: OnboardingRewardRoute,
+  OnboardingShopRoute: OnboardingShopRoute,
+  OnboardingWelcomeRoute: OnboardingWelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
