@@ -9,12 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welcome'
 import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
 import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
 import { Route as OnboardingFeaturesRouteImport } from './routes/onboarding.features'
+import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
+import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
+import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
 
+const TabsRoute = TabsRouteImport.update({
+  id: '/_tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -40,9 +48,27 @@ const OnboardingFeaturesRoute = OnboardingFeaturesRouteImport.update({
   path: '/onboarding/features',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TabsMineRoute = TabsMineRouteImport.update({
+  id: '/mine',
+  path: '/mine',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsHomeRoute = TabsHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsAssetsRoute = TabsAssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
+  getParentRoute: () => TabsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assets': typeof TabsAssetsRoute
+  '/home': typeof TabsHomeRoute
+  '/mine': typeof TabsMineRoute
   '/onboarding/features': typeof OnboardingFeaturesRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -50,6 +76,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assets': typeof TabsAssetsRoute
+  '/home': typeof TabsHomeRoute
+  '/mine': typeof TabsMineRoute
   '/onboarding/features': typeof OnboardingFeaturesRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -58,6 +87,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_tabs': typeof TabsRouteWithChildren
+  '/_tabs/assets': typeof TabsAssetsRoute
+  '/_tabs/home': typeof TabsHomeRoute
+  '/_tabs/mine': typeof TabsMineRoute
   '/onboarding/features': typeof OnboardingFeaturesRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -67,6 +100,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assets'
+    | '/home'
+    | '/mine'
     | '/onboarding/features'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -74,6 +110,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assets'
+    | '/home'
+    | '/mine'
     | '/onboarding/features'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -81,6 +120,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_tabs'
+    | '/_tabs/assets'
+    | '/_tabs/home'
+    | '/_tabs/mine'
     | '/onboarding/features'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -89,6 +132,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TabsRoute: typeof TabsRouteWithChildren
   OnboardingFeaturesRoute: typeof OnboardingFeaturesRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
   OnboardingShopRoute: typeof OnboardingShopRoute
@@ -97,6 +141,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_tabs': {
+      id: '/_tabs'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -132,11 +183,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingFeaturesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_tabs/mine': {
+      id: '/_tabs/mine'
+      path: '/mine'
+      fullPath: '/mine'
+      preLoaderRoute: typeof TabsMineRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/home': {
+      id: '/_tabs/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof TabsHomeRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/assets': {
+      id: '/_tabs/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof TabsAssetsRouteImport
+      parentRoute: typeof TabsRoute
+    }
   }
 }
 
+interface TabsRouteChildren {
+  TabsAssetsRoute: typeof TabsAssetsRoute
+  TabsHomeRoute: typeof TabsHomeRoute
+  TabsMineRoute: typeof TabsMineRoute
+}
+
+const TabsRouteChildren: TabsRouteChildren = {
+  TabsAssetsRoute: TabsAssetsRoute,
+  TabsHomeRoute: TabsHomeRoute,
+  TabsMineRoute: TabsMineRoute,
+}
+
+const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TabsRoute: TabsRouteWithChildren,
   OnboardingFeaturesRoute: OnboardingFeaturesRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
   OnboardingShopRoute: OnboardingShopRoute,
