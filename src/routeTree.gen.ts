@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welcome'
+import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
+import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
+import { Route as OnboardingFeaturesRouteImport } from './routes/onboarding.features'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +25,73 @@ const OnboardingWelcomeRoute = OnboardingWelcomeRouteImport.update({
   path: '/onboarding/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingShopRoute = OnboardingShopRouteImport.update({
+  id: '/onboarding/shop',
+  path: '/onboarding/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRewardRoute = OnboardingRewardRouteImport.update({
+  id: '/onboarding/reward',
+  path: '/onboarding/reward',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingFeaturesRoute = OnboardingFeaturesRouteImport.update({
+  id: '/onboarding/features',
+  path: '/onboarding/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/onboarding/features': typeof OnboardingFeaturesRoute
+  '/onboarding/reward': typeof OnboardingRewardRoute
+  '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/onboarding/welcome'
+  fullPaths:
+    | '/'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/onboarding/welcome'
-  id: '__root__' | '/' | '/onboarding/welcome'
+  to:
+    | '/'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
+  id:
+    | '__root__'
+    | '/'
+    | '/onboarding/features'
+    | '/onboarding/reward'
+    | '/onboarding/shop'
+    | '/onboarding/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OnboardingFeaturesRoute: typeof OnboardingFeaturesRoute
+  OnboardingRewardRoute: typeof OnboardingRewardRoute
+  OnboardingShopRoute: typeof OnboardingShopRoute
   OnboardingWelcomeRoute: typeof OnboardingWelcomeRoute
 }
 
@@ -65,11 +111,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingWelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/shop': {
+      id: '/onboarding/shop'
+      path: '/onboarding/shop'
+      fullPath: '/onboarding/shop'
+      preLoaderRoute: typeof OnboardingShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/reward': {
+      id: '/onboarding/reward'
+      path: '/onboarding/reward'
+      fullPath: '/onboarding/reward'
+      preLoaderRoute: typeof OnboardingRewardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/features': {
+      id: '/onboarding/features'
+      path: '/onboarding/features'
+      fullPath: '/onboarding/features'
+      preLoaderRoute: typeof OnboardingFeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OnboardingFeaturesRoute: OnboardingFeaturesRoute,
+  OnboardingRewardRoute: OnboardingRewardRoute,
+  OnboardingShopRoute: OnboardingShopRoute,
   OnboardingWelcomeRoute: OnboardingWelcomeRoute,
 }
 export const routeTree = rootRouteImport
