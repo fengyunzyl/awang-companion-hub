@@ -1,5 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import coffee from "@/assets/asset-coffee.jpg";
+import cake from "@/assets/asset-cake.jpg";
+import bag from "@/assets/asset-bag.jpg";
+import party from "@/assets/asset-party.jpg";
+import flower from "@/assets/asset-flower.jpg";
+import matcha from "@/assets/asset-matcha.jpg";
+import lipstick from "@/assets/asset-lipstick.jpg";
+import sneaker from "@/assets/asset-sneaker.jpg";
+import gift from "@/assets/asset-gift.jpg";
+import salad from "@/assets/upload-salad.jpg";
+import ramen from "@/assets/upload-ramen.jpg";
+import burger from "@/assets/upload-burger.jpg";
+import shop from "@/assets/upload-shop.jpg";
+import milktea from "@/assets/upload-milktea.jpg";
+import icecream from "@/assets/upload-icecream.jpg";
 
 export const Route = createFileRoute("/_tabs/assets")({
   component: Assets,
@@ -15,17 +30,17 @@ const tagColor: Record<string, string> = {
 };
 
 const results = [
-  { tag: "朋友圈", emoji: "☕" },
-  { tag: "小红书", emoji: "🍰" },
-  { tag: "商品头图", emoji: "👜" },
-  { tag: "创意海报", emoji: "🎉" },
-  { tag: "去水印", emoji: "🌺" },
-  { tag: "朋友圈", emoji: "🍵" },
-  { tag: "小红书", emoji: "💄" },
-  { tag: "商品头图", emoji: "👟" },
-  { tag: "创意海报", emoji: "🎁" },
+  { tag: "朋友圈", img: coffee },
+  { tag: "小红书", img: cake },
+  { tag: "商品头图", img: bag },
+  { tag: "创意海报", img: party },
+  { tag: "去水印", img: flower },
+  { tag: "朋友圈", img: matcha },
+  { tag: "小红书", img: lipstick },
+  { tag: "商品头图", img: sneaker },
+  { tag: "创意海报", img: gift },
 ];
-const uploads = ["📷", "🖼️", "🌆", "🥗", "🍜", "🍔"];
+const uploads = [salad, ramen, burger, shop, milktea, icecream];
 
 function Assets() {
   const [tab, setTab] = useState<"r" | "u">("r");
@@ -56,10 +71,16 @@ function Assets() {
           {results.map((r, i) => (
             <div
               key={i}
-              className="aspect-square rounded-xl relative overflow-hidden flex items-center justify-center text-5xl"
-              style={{ background: "linear-gradient(135deg,#fff1d6,#ffe0b8)" }}
+              className="aspect-square rounded-xl relative overflow-hidden bg-secondary"
             >
-              {r.emoji}
+              <img
+                src={r.img}
+                alt={r.tag}
+                loading="lazy"
+                width={512}
+                height={512}
+                className="w-full h-full object-cover"
+              />
               <span
                 className={`absolute right-1 bottom-1 text-[10px] text-white px-1.5 py-0.5 rounded-md ${tagColor[r.tag]}`}
               >
@@ -70,12 +91,19 @@ function Assets() {
         </div>
       ) : (
         <div className="grid grid-cols-3 gap-2">
-          {uploads.map((e, i) => (
+          {uploads.map((src, i) => (
             <div
               key={i}
-              className="aspect-square rounded-xl flex items-center justify-center text-5xl bg-secondary"
+              className="aspect-square rounded-xl overflow-hidden bg-secondary"
             >
-              {e}
+              <img
+                src={src}
+                alt="上传"
+                loading="lazy"
+                width={512}
+                height={512}
+                className="w-full h-full object-cover"
+              />
             </div>
           ))}
         </div>
