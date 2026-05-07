@@ -36,10 +36,7 @@ function ShopLink() {
   ];
 
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
-    >
+    <div className="min-h-screen flex flex-col" style={{ background: "#fafafa" }}>
       <PageHeader title="店铺档案" />
       <div className="flex-1 flex flex-col px-6 pt-6 pb-10">
         <div className="flex-1">
