@@ -64,7 +64,7 @@ function Demo() {
     >
       <div className="px-6 pt-10 pb-3">
         <h1 className="text-xl font-bold text-text-primary">先看个使用示例</h1>
-        <p className="text-sm text-text-secondary mt-1">给我一张图，修图、配文案，我来一起搞定</p>
+        <p className="text-sm text-text-secondary mt-1">给我一张图</p>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
