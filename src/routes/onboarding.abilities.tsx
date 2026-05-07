@@ -28,7 +28,7 @@ function Abilities() {
           />
           <AbilityCard
             title="去除水印"
-            desc="一键去掉 AI 水印"
+            desc="一键去掉图片水印"
             before={demoBefore}
             after={demoAfter}
           />
