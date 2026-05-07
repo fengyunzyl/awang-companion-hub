@@ -323,9 +323,7 @@ function Shop() {
         <AlertDialogContent className="max-w-[320px] rounded-2xl !slide-in-from-left-0 !slide-in-from-top-0 !slide-out-to-left-0 !slide-out-to-top-0">
           <AlertDialogHeader>
             <AlertDialogTitle>确认跳过？</AlertDialogTitle>
-            <AlertDialogDescription>
-              生成的内容可能无法贴合店铺行业,确认跳过？
-            </AlertDialogDescription>
+            <AlertDialogDescription>生成的内容可能无法贴合店铺，确认跳过？</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-row gap-2">
             <AlertDialogCancel className="flex-1 mt-0">取消</AlertDialogCancel>
