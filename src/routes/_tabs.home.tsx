@@ -21,7 +21,7 @@ function Home() {
     <div className="px-4 pt-3 pb-6 min-h-screen" style={{ background: "#fafafa" }}>
       {/* Top bar */}
       <div className="flex items-center justify-between mb-4">
-        <div className="text-2xl font-bold text-text-primary leading-tight">阿旺</div>
+        <div className="font-bold text-text-primary leading-tight text-lg">阿旺</div>
         <Link
           to="/points"
           className="flex items-center gap-1.5 bg-gradient-points rounded-full pl-3 pr-1 py-1 shadow-button"
