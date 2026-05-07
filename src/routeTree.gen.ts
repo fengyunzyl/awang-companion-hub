@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welcome'
 import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
 import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
+import { Route as OnboardingDemoRouteImport } from './routes/onboarding.demo'
 import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
 import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
 import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
@@ -73,6 +74,11 @@ const OnboardingRewardRoute = OnboardingRewardRouteImport.update({
   path: '/onboarding/reward',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingDemoRoute = OnboardingDemoRouteImport.update({
+  id: '/onboarding/demo',
+  path: '/onboarding/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsMineRoute = TabsMineRouteImport.update({
   id: '/mine',
   path: '/mine',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/_tabs/assets': typeof TabsAssetsRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/mine': typeof TabsMineRoute
+  '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
   '/onboarding/welcome': typeof OnboardingWelcomeRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
     | '/onboarding/welcome'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
     | '/onboarding/welcome'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/_tabs/assets'
     | '/_tabs/home'
     | '/_tabs/mine'
+    | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
     | '/onboarding/welcome'
@@ -199,6 +211,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ShopProfileRoute: typeof ShopProfileRoute
   FeatureRoute: typeof FeatureRoute
+  OnboardingDemoRoute: typeof OnboardingDemoRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
   OnboardingShopRoute: typeof OnboardingShopRoute
   OnboardingWelcomeRoute: typeof OnboardingWelcomeRoute
@@ -276,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRewardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/demo': {
+      id: '/onboarding/demo'
+      path: '/onboarding/demo'
+      fullPath: '/onboarding/demo'
+      preLoaderRoute: typeof OnboardingDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs/mine': {
       id: '/_tabs/mine'
       path: '/mine'
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ShopProfileRoute: ShopProfileRoute,
   FeatureRoute: FeatureRoute,
+  OnboardingDemoRoute: OnboardingDemoRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
   OnboardingShopRoute: OnboardingShopRoute,
   OnboardingWelcomeRoute: OnboardingWelcomeRoute,
