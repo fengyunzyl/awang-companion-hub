@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronLeft, ImagePlus, Sparkles, Clock } from "lucide-react";
+import { ChevronLeft, ImageIcon, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { MomentsConfig, ModelPicker } from "@/components/aw/MomentsConfig";
+import { MomentsConfig, ModelPicker, ModelChip } from "@/components/aw/MomentsConfig";
 import {
   COST,
   DEFAULT_PARAMS,
@@ -85,16 +85,15 @@ function Create() {
         </Link>
       </div>
 
-      <div className="px-4 py-4 space-y-3">
-        {/* upload */}
-        <div className="bg-card rounded-2xl p-4 shadow-card">
-          <div className="text-sm font-semibold text-text-primary mb-3">上传素材</div>
+      <div className="px-4 pt-2 pb-4">
+        <div className="text-sm font-semibold text-text-primary mb-2.5">上传图片</div>
+        <div className="bg-card rounded-2xl p-3 shadow-card mb-4">
           {imageDataURL ? (
             <div className="relative">
               <img
                 src={imageDataURL}
                 alt="uploaded"
-                className="w-full aspect-square object-cover rounded-xl"
+                className="w-full aspect-[5/3] object-cover rounded-xl"
               />
               <label className="absolute right-2 bottom-2 bg-black/55 text-white text-xs rounded-full px-3 py-1.5 cursor-pointer">
                 重新上传
@@ -103,43 +102,36 @@ function Create() {
             </div>
           ) : (
             <label className="block cursor-pointer">
-              <div className="w-full aspect-video rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center gap-2 text-text-tertiary">
-                <ImagePlus className="w-7 h-7" />
-                <span className="text-sm">点击上传图片</span>
+              <div className="w-full aspect-[5/3] rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center gap-2 text-text-tertiary">
+                <ImageIcon className="w-7 h-7" />
+                <span className="text-sm">上传图片</span>
               </div>
               <input type="file" accept="image/*" className="hidden" onChange={onPick} />
             </label>
           )}
         </div>
 
-        <MomentsConfig
-          value={params}
-          onChange={setParams}
-          onPickModel={() => setModelOpen(true)}
-        />
+        <MomentsConfig value={params} onChange={setParams} />
       </div>
 
       {/* bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-30">
-        <div className="max-w-[430px] mx-auto bg-card border-t border-border px-4 pt-3 pb-5 flex items-center gap-3">
-          <div className="flex-1 min-w-0">
-            <div className="text-xs text-text-secondary">
-              预计消耗 <span className="text-primary font-semibold">{COST}</span> 积分 · 剩余{" "}
-              {points}
-            </div>
-            <Link to="/points" className="text-[11px] text-primary mt-0.5 inline-block">
-              获取更多积分 ›
-            </Link>
+        <div className="max-w-[430px] mx-auto px-4 pt-3 pb-5">
+          <div className="flex items-center gap-3">
+            <ModelChip value={params.model} onClick={() => setModelOpen(true)} />
+            <button
+              onClick={onSubmit}
+              disabled={!imageDataURL}
+              className="flex-1 bg-gradient-points text-text-primary rounded-full font-semibold text-base shadow-button disabled:opacity-50"
+              style={{ height: 48 }}
+            >
+              开始创作
+            </button>
           </div>
-          <button
-            onClick={onSubmit}
-            disabled={!imageDataURL}
-            className="bg-primary text-primary-foreground rounded-full font-semibold text-sm shadow-button flex items-center gap-1.5 px-6 disabled:opacity-50"
-            style={{ height: 44 }}
-          >
-            <Sparkles className="w-4 h-4" />
-            开始创作
-          </button>
+          <div className="text-center text-[11px] text-text-tertiary mt-2">
+            本次预计消耗 <span className="text-primary">{COST}</span> 积分，还剩 {points} 积分{" "}
+            <Link to="/points" className="text-primary">获取更多积分</Link>
+          </div>
         </div>
       </div>
 
