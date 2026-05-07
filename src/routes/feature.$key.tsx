@@ -159,46 +159,67 @@ function Feature() {
       <div className="fixed bottom-0 inset-x-0 max-w-[430px] mx-auto bg-card/95 backdrop-blur border-t border-border px-4 pt-3 pb-4">
         <div className="flex items-center gap-3">
           {/* 模型选择 */}
-          <div className="relative">
-            <button
-              onClick={() => setModelOpen((v) => !v)}
-              className="flex items-center gap-1.5 bg-secondary rounded-xl px-2.5 py-2"
+          <button
+            onClick={() => setModelOpen(true)}
+            className="flex items-center gap-1.5 bg-secondary rounded-xl px-2.5 py-2"
+          >
+            <span
+              className="w-7 h-7 rounded-lg text-white text-xs font-bold flex items-center justify-center"
+              style={{ background: MODELS.find((x) => x.key === model)?.color }}
             >
-              <span className="w-7 h-7 rounded-lg bg-gradient-brand text-white text-xs font-bold flex items-center justify-center">
-                {model === "pro" ? "P" : "S"}
-              </span>
-              <div className="text-left">
-                <div className="text-[10px] text-text-tertiary leading-none mb-0.5">当前模型</div>
-                <div className="text-xs font-semibold text-text-primary leading-none">
-                  {MODELS.find((x) => x.key === model)?.label}
-                </div>
+              {MODELS.find((x) => x.key === model)?.letter}
+            </span>
+            <div className="text-left">
+              <div className="text-[10px] text-text-tertiary leading-none mb-0.5">当前模型</div>
+              <div className="text-xs font-semibold text-text-primary leading-none">
+                {MODELS.find((x) => x.key === model)?.label}
               </div>
-              <ChevronDown className="w-3 h-3 text-text-tertiary" />
-            </button>
-            {modelOpen && (
-              <div className="absolute bottom-full left-0 mb-2 w-44 bg-card rounded-xl shadow-lg border border-border overflow-hidden">
-                {MODELS.map((mm) => (
-                  <button
-                    key={mm.key}
-                    onClick={() => {
-                      setModel(mm.key as typeof model);
-                      setModelOpen(false);
-                    }}
-                    className={cn(
-                      "w-full px-3 py-2.5 text-left flex items-center justify-between",
-                      model === mm.key ? "bg-primary-light" : "",
-                    )}
-                  >
-                    <div>
-                      <div className="text-sm font-semibold text-text-primary">{mm.label}</div>
-                      <div className="text-xs text-text-tertiary">{mm.desc}</div>
-                    </div>
-                    {model === mm.key && <Check className="w-4 h-4 text-primary" />}
-                  </button>
-                ))}
+            </div>
+            <ChevronDown className="w-3 h-3 text-text-tertiary" />
+          </button>
+
+          <Sheet open={modelOpen} onOpenChange={setModelOpen}>
+            <SheetContent side="bottom" className="rounded-t-2xl p-5 max-w-[430px] mx-auto">
+              <SheetHeader>
+                <SheetTitle className="text-sm text-text-tertiary font-normal text-left">选择模型</SheetTitle>
+              </SheetHeader>
+              <div className="mt-3 space-y-2">
+                {MODELS.map((mm) => {
+                  const active = model === mm.key;
+                  return (
+                    <button
+                      key={mm.key}
+                      onClick={() => {
+                        setModel(mm.key as typeof model);
+                        setModelOpen(false);
+                      }}
+                      className={cn(
+                        "w-full flex items-center gap-3 rounded-2xl p-3 transition",
+                        active ? "bg-primary-light" : "bg-card",
+                      )}
+                    >
+                      <span
+                        className="w-12 h-12 rounded-xl text-white text-lg font-bold flex items-center justify-center shrink-0"
+                        style={{ background: mm.color }}
+                      >
+                        {mm.letter}
+                      </span>
+                      <div className="flex-1 text-left">
+                        <div className="text-sm font-semibold text-text-primary flex items-center gap-2">
+                          {mm.label}
+                          {mm.recommended && (
+                            <span className="text-[10px] bg-primary-light text-primary-dark rounded-full px-1.5 py-0.5 font-medium">推荐</span>
+                          )}
+                        </div>
+                        <div className="text-xs text-text-tertiary mt-0.5">{mm.desc}</div>
+                      </div>
+                      {active && <Check className="w-5 h-5 text-primary shrink-0" />}
+                    </button>
+                  );
+                })}
               </div>
-            )}
-          </div>
+            </SheetContent>
+          </Sheet>
 
           {/* 主按钮 */}
           <button
