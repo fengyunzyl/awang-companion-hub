@@ -18,7 +18,7 @@ const features = [
 function Home() {
   const points = typeof window !== "undefined" ? localStorage.getItem("aw_points_avail") ?? "100" : "100";
   return (
-    <div className="px-4 pt-3 pb-6">
+    <div className="px-4 pt-3 pb-6 min-h-screen" style={{ background: "#fafafa" }}>
       {/* Top bar */}
       <div className="flex items-center justify-between mb-4">
         <div>
