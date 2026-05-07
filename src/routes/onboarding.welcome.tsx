@@ -13,8 +13,8 @@ function Welcome() {
       className="min-h-screen flex flex-col px-8 py-16"
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
-      <div className="flex-1 flex flex-col justify-center">
-        <img src={mascot} alt="阿旺" className="w-28 h-28 object-contain mb-6 -ml-2" />
+      <div className="flex-1 flex flex-col justify-center items-center text-center">
+        <img src={mascot} alt="阿旺" className="w-[134px] h-[134px] object-contain mb-6" />
         <h1 className="font-bold text-text-primary leading-tight mb-4 text-xl">
           嗨,我是阿旺
         </h1>
