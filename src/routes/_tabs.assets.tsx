@@ -21,14 +21,6 @@ export const Route = createFileRoute("/_tabs/assets")({
   head: () => ({ meta: [{ title: "我的作品" }] }),
 });
 
-const tagColor: Record<string, string> = {
-  朋友圈: "bg-primary",
-  小红书: "bg-[#ff5470]",
-  商品头图: "bg-info",
-  创意海报: "bg-[#7c5cff]",
-  去水印: "bg-success",
-};
-
 const results = [
   { tag: "朋友圈", img: coffee },
   { tag: "小红书", img: cake },
@@ -82,7 +74,7 @@ function Assets() {
                 className="w-full h-full object-cover"
               />
               <span
-                className={`absolute right-1 bottom-1 text-[10px] text-white px-1.5 py-0.5 rounded-md ${tagColor[r.tag]}`}
+                className="absolute right-1.5 bottom-1.5 text-[10px] font-medium text-text-primary px-1.5 py-0.5 rounded-md bg-white/85 backdrop-blur-sm"
               >
                 {r.tag}
               </span>
