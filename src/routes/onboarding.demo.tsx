@@ -63,7 +63,7 @@ function Demo() {
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
       <div className="px-6 pt-10 pb-3">
-        <h1 className="text-xl font-bold text-text-primary">我先做一条给你看</h1>
+        <h1 className="text-xl font-bold text-text-primary">先随手做一张，你看看感觉</h1>
         <p className="text-sm text-text-secondary mt-1">修图、配文案,我来一起搞定</p>
       </div>
 
@@ -78,7 +78,7 @@ function Demo() {
             className="w-full flex flex-col items-center justify-center gap-2 py-10 rounded-2xl border-2 border-dashed border-primary/40 bg-card/60 text-text-secondary hover:bg-card transition-colors"
           >
             <ImagePlus className="w-8 h-8 text-primary" />
-            <span className="text-sm font-medium">上传一张示例图</span>
+            <span className="text-sm font-medium">使用示例图</span>
           </button>
         )}
       </div>
@@ -93,7 +93,7 @@ function Demo() {
           }`}
           style={{ height: 52 }}
         >
-          继续看看
+          继续
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

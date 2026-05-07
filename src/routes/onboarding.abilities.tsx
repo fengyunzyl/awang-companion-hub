@@ -15,23 +15,20 @@ function Abilities() {
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
       <div className="flex-1">
-        <h1 className="text-xl font-bold text-text-primary mb-2">
-          这些我也能帮你
+        <h1 className="text-xl font-bold text-text-primary mb-6">
+          我还可以帮你：
         </h1>
-        <p className="text-sm text-text-secondary mb-6">
-          除了图文内容,这些小事也可以交给我
-        </p>
 
         <div className="space-y-4">
           <AbilityCard
-            title="海报也能做"
-            desc="上传实拍图,我帮你自动排成海报"
+            title="创作海报"
+            desc="上传实拍图,我帮你创作商业海报"
             before={demoBefore}
             after={demoAfter}
           />
           <AbilityCard
-            title="水印也能去"
-            desc="图上的小水印,点一下就干净了"
+            title="去除水印"
+            desc="一键去掉 AI 水印"
             before={demoBefore}
             after={demoAfter}
           />
@@ -68,8 +65,8 @@ function AbilityCard({
       </div>
       <p className="text-sm text-text-secondary mb-3">{desc}</p>
       <div className="grid grid-cols-2 gap-2">
-        <Thumb src={before} label="原图" />
-        <Thumb src={after} label="成品" highlight />
+        <Thumb src={before} label="之前" />
+        <Thumb src={after} label="之后" highlight />
       </div>
     </div>
   );
