@@ -15,8 +15,7 @@ type Msg =
   | { from: "user"; type: "image"; src: string }
   | { from: "awang"; type: "text"; text: string }
   | { from: "awang"; type: "typing" }
-  | { from: "awang"; type: "image"; src: string }
-  | { from: "awang"; type: "caption"; text: string };
+  | { from: "awang"; type: "result"; src: string; text: string };
 
 const script: Msg[] = [
   { from: "user", type: "image", src: demoBefore },
@@ -25,10 +24,10 @@ const script: Msg[] = [
   { from: "awang", type: "typing" },
   { from: "awang", type: "text", text: "再配一段适合发朋友圈的文案~" },
   { from: "awang", type: "typing" },
-  { from: "awang", type: "image", src: demoAfter },
   {
     from: "awang",
-    type: "caption",
+    type: "result",
+    src: demoAfter,
     text: "今天来店里的姐妹有口福啦~ 这杯奶茶颜值在线、味道更绝,坐在窗边来一杯,阳光都变甜了 ☕✨",
   },
 ];
@@ -103,7 +102,7 @@ function Bubble({ msg }: { msg: Msg }) {
       )}
       <div
         className={`max-w-[75%] ${
-          msg.type === "image" ? "p-1.5" : "px-3.5 py-2.5"
+          msg.type === "image" || msg.type === "result" ? "p-1.5" : "px-3.5 py-2.5"
         } rounded-2xl shadow-card text-sm leading-relaxed ${
           isUser
             ? "bg-primary text-primary-foreground rounded-tr-sm"
@@ -111,9 +110,6 @@ function Bubble({ msg }: { msg: Msg }) {
         }`}
       >
         {msg.type === "text" && <span>{msg.text}</span>}
-        {msg.type === "caption" && (
-          <span className="text-text-secondary">{msg.text}</span>
-        )}
         {msg.type === "image" && (
           <img
             src={msg.src}
@@ -122,6 +118,18 @@ function Bubble({ msg }: { msg: Msg }) {
             width={512}
             height={512}
           />
+        )}
+        {msg.type === "result" && (
+          <div>
+            <img
+              src={msg.src}
+              alt=""
+              className="w-44 h-44 object-cover rounded-xl"
+              width={512}
+              height={512}
+            />
+            <p className="text-text-secondary px-2 py-2">{msg.text}</p>
+          </div>
         )}
         {msg.type === "typing" && (
           <span className="flex items-center gap-1.5 text-text-tertiary">
