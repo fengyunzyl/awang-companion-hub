@@ -1,58 +1,65 @@
-## /onboarding/shop 页面改造方案
+## 目标
 
-### 目标
-将当前"链接 + 截图上传"双方案，改为"链接（默认主方式） + 手动填写（弹窗备选）"，并在"以后再填"时增加二次确认。
+为「朋友圈图文」入口构建完整创作链路：创作配置页 → 生成结果页 → 生成记录页，替换现有通用 `/feature/moments` 占位逻辑。
 
----
+## 路由结构
 
-### 1. 页面主体（默认：填写店铺链接）
+```text
+src/routes/
+  moments.create.tsx     -> /moments/create   朋友圈创作（配置页）
+  moments.result.tsx     -> /moments/result   生成结果页
+  moments.history.tsx    -> /moments/history  生成记录列表
+```
 
-- 顶部标题保留：`帮我更懂你` / `告诉我你的店铺是哪个…`
-- 平台标识行：大众点评 / 美团 / 高德（保留）
-- 操作指引文案：`打开大众点评 / 美团 / 高德 店铺页 → 右上角分享 → 复制链接`
-- **示意图**：在指引下方放一张分享面板示意图（占位 illustration，后续可替换为真实截图素材）
-- **链接输入框**：放大为多行/高输入区（约 96–112px 高，圆角 16，带 Link2 图标），占据页面主要视觉区域
-- 移除原"上传店铺截图"分隔线与上传卡片
+`_tabs.home.tsx` 中「朋友圈图文」入口由 `/feature/$key` 改为 `/moments/create`，其它 5 个功能保持原 `/feature/$key` 不变。
 
-### 2. 备选入口：没有店铺链接，手动输入
+## 页面 1：/moments/create 朋友圈创作
 
-- 在输入框下方加一个文本按钮：`没有店铺链接？手动填写店铺信息`
-- 点击打开弹窗（Dialog）：
-  - 店铺名称（input）
-  - 店铺类目（input，占位"如:奶茶 / 餐饮 / 美甲"）
-  - 所在地区（省 / 市 / 区 三级，使用三个下拉 Select；数据用内置的简化省市区 mock，文件 `src/lib/region.ts`）
-  - 详细地址（textarea）
-  - 底部：`取消` / `保存`
-- 校验：店铺名称、类目、省市区必填
-- 保存后：
-  - 数据写入 `localStorage`（`aw_shop_manual`）
-  - 关闭弹窗
-  - 页面主体从"链接输入"切换为"已填写信息卡片"展示：店铺名称、类目、地区+地址，右上角"编辑"按钮可重新打开弹窗
-  - 主按钮文案保持 `领取 100 创作积分`
+顶部 PageHeader：标题"朋友圈创作"，右侧「记录」按钮（跳 `/moments/history`）。
 
-### 3. "以后再填" 二次确认
+模块（自上而下）：
 
-- 点击 `以后再填` 不再直接跳转
-- 弹出 AlertDialog：
-  - 标题：`确认跳过？`
-  - 内容：`生成的内容可能无法贴合店铺行业，确认跳过？`
-  - 按钮：`取消`（关闭弹窗，停留当前页） / `确认`（跳转 `/onboarding/reward`）
+1. **图片上传卡**：单图，支持点击选择/重新选择；预览缩略图 + 「重新上传」按钮。本地用 `URL.createObjectURL` 预览即可（无后端）。
+2. **创作结果类型**（单选 chips）：`图+朋友圈文案`(默认) / `只需要图`
+3. **生成模式**（单选 chips）：`智能模式`(默认) / `自定义`；选中自定义时下方展开 textarea，placeholder：`请简单输入对图片的要求,如风格、标题、副标题等内容`
+4. **创作主题**（单选 chips，可横向滚动）：`日常宣传`(默认) / `新品上市` / `节日促销` / `顾客好评`
+5. **图片加字开关**：`不在图片上添加文字` + Switch，独立布尔
+6. **模型信息**：行项「生成模型 · 标准版 ›」，点击弹 Sheet（底部弹层）展示 3 个模型单选：
+  - 标准版 — 均衡了速度和生成质量
+  - 专业版（推荐 badge）— 速度稍慢,但细节更丰富
+  - 轻量版 — 生成速度更快,适合快速预览
+7. **底部固定 CTA 栏**：
+  - 左侧文字：`预计消耗 10 积分 · 剩余 {points}`，下方小字「获取更多积分」链接 → `/points`
+  - 右侧主按钮：`开始创作`
 
-### 4. 提交逻辑
+交互：
 
-- 主按钮 `领取 100 创作积分`：
-  - 若有链接 → 存 `aw_shop_link`
-  - 若已手动填写 → 存 `aw_shop_manual`（JSON）
-  - 二者皆空时按钮置灰禁用
-  - 跳转 `/onboarding/reward`
+- 未上传图片：按钮禁用 + toast「请先上传图片」
+- 积分不足（剩余 < 消耗）：toast「积分不足」+ 跳 `/points`
+- 校验通过：将参数序列化存 `sessionStorage.aw_moments_params`（含 imageDataURL）+ 写入 history（`localStorage.aw_moments_history` 数组），跳 `/moments/result`
 
----
+默认值：resultType=`text_image`，mode=`smart`，theme=`daily`，noTextOnImage=`false`，model=`standard`。
 
-### 技术细节
-- 文件改动：
-  - 改写 `src/routes/onboarding.shop.tsx`
-  - 新增 `src/lib/region.ts`（简化省市区数据）
-  - 复用 `@/components/ui/dialog`、`alert-dialog`、`select`、`textarea`、`button`
-- 移除：截图上传相关 state（`screenshot`、`fileRef`、`onFile`）与 `ImagePlus`、`X` 图标
-- 示意图：先用一个占位 SVG/插图块（浅色背景 + 简化的"分享 → 复制链接"图示），避免外部素材依赖
-- 设计 token 全部使用现有语义色（`bg-card`、`text-text-*`、`primary` 等），不引入新色
+## 页面 2：/moments/history 生成记录
+
+PageHeader：「生成记录」。
+
+列表卡片（一行一张）：左侧上传原图缩略 + 右侧标题（取主题名 + 时间，如「日常宣传 · 5/7 14:30」）+ 右箭头。点击进入 `/moments/result?id=xxx`（从 history 中读取参数恢复）。
+
+空态：「暂无生成记录」。
+
+数据来源：`localStorage.aw_moments_history`，结构 `[{id, imageDataURL, params, createdAt}]`，最多保留 20 条。
+
+## 技术细节
+
+- 全部前端 mock，不依赖后端；积分读 `localStorage.aw_points_avail`，消耗后 `setItem` 减 10。
+- 图片用 FileReader 转 dataURL 存入 sessionStorage/localStorage（单图 < 2MB 限制 + 提示）。
+- 弹层用现有 `@/components/ui/sheet`；toast 用现有 sonner（`src/components/ui/sonner.tsx` 已存在）。
+- 单选 chips、Switch、textarea 全部使用 `src/styles.css` 设计 token，沿用 onboarding/shop 与 _tabs.home 的卡片风格（`rounded-2xl bg-card shadow-card`）。
+- 修改 `_tabs.home.tsx`：`features[0]` 直接渲染为 `<Link to="/moments/create">`，其余仍走 `/feature/$key`。
+
+## 不在本次范围
+
+- 真实 AI 生成接口
+- 图片上传到云存储
+- 朋友圈一键分享
