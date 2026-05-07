@@ -14,18 +14,24 @@ function Reward() {
     nav({ to: "/home" });
   };
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-primary px-8 pt-20 pb-10 text-center">
+    <div
+      className="min-h-screen flex flex-col px-8 pt-20 pb-10 text-center"
+      style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
+    >
       <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="text-7xl mb-6 animate-bounce">🎁</div>
-        <h1 className="text-2xl font-bold text-text-primary mb-3">
-          阿旺准备好了!
-        </h1>
-        <p className="text-base text-text-secondary mb-8">
-          送你 <span className="text-primary font-bold text-xl">100</span> 积分当见面礼
-        </p>
-        <div className="bg-card/80 backdrop-blur rounded-2xl px-6 py-5 text-sm text-text-secondary leading-relaxed">
-          以后想做图、写文案,<br />随时来找我
+        <div
+          className="w-32 h-32 rounded-3xl flex items-center justify-center mb-8 shadow-button"
+          style={{ background: "var(--gradient-points)" }}
+        >
+          <div className="text-center text-primary-foreground">
+            <div className="text-4xl font-bold leading-none">100</div>
+            <div className="text-xs mt-1 opacity-90">创作积分</div>
+          </div>
         </div>
+        <h1 className="text-2xl font-bold text-text-primary mb-2">
+          送你 100 创作积分
+        </h1>
+        <p className="text-base text-text-secondary">开始创作吧～</p>
       </div>
       <button
         onClick={start}
