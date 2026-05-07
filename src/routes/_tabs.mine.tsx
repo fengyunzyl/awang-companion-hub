@@ -14,7 +14,6 @@ function Mine() {
           🐶
         </div>
         <div>
-          <div className="text-lg font-bold text-text-primary">阿旺商家</div>
           <div className="text-sm text-text-secondary">138****1234</div>
         </div>
       </div>
