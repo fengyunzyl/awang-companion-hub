@@ -59,7 +59,7 @@ function Mine() {
               >
                 <Icon className="w-5 h-5 text-primary" />
                 <span className="flex-1 text-sm text-text-primary">{it.label}</span>
-                {it.sub && <span className="text-xs text-text-tertiary">{it.sub}</span>}
+                {it.sub && <span className="text-text-tertiary text-sm">{it.sub}</span>}
                 <ChevronRight className="w-4 h-4 text-text-tertiary" />
               </Link>
             );
