@@ -14,7 +14,7 @@ const tabs = [
 function TabsLayout() {
   const loc = useLocation();
   return (
-    <div className="min-h-screen flex flex-col bg-background pb-[72px]">
+    <div className="min-h-screen flex flex-col pb-[72px]" style={{ background: "#fafafa" }}>
       <div className="flex-1">
         <Outlet />
       </div>
