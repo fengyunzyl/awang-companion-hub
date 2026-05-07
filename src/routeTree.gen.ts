@@ -22,6 +22,9 @@ import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
 import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
 import { Route as OnboardingDemoRouteImport } from './routes/onboarding.demo'
 import { Route as OnboardingAbilitiesRouteImport } from './routes/onboarding.abilities'
+import { Route as MomentsResultRouteImport } from './routes/moments.result'
+import { Route as MomentsHistoryRouteImport } from './routes/moments.history'
+import { Route as MomentsCreateRouteImport } from './routes/moments.create'
 import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
 import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
 import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
@@ -91,6 +94,21 @@ const OnboardingAbilitiesRoute = OnboardingAbilitiesRouteImport.update({
   path: '/onboarding/abilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MomentsResultRoute = MomentsResultRouteImport.update({
+  id: '/moments/result',
+  path: '/moments/result',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentsHistoryRoute = MomentsHistoryRouteImport.update({
+  id: '/moments/history',
+  path: '/moments/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentsCreateRoute = MomentsCreateRouteImport.update({
+  id: '/moments/create',
+  path: '/moments/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsMineRoute = TabsMineRouteImport.update({
   id: '/mine',
   path: '/mine',
@@ -124,6 +142,9 @@ export interface FileRoutesByFullPath {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/moments/create': typeof MomentsCreateRoute
+  '/moments/history': typeof MomentsHistoryRoute
+  '/moments/result': typeof MomentsResultRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -142,6 +163,9 @@ export interface FileRoutesByTo {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/moments/create': typeof MomentsCreateRoute
+  '/moments/history': typeof MomentsHistoryRoute
+  '/moments/result': typeof MomentsResultRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -162,6 +186,9 @@ export interface FileRoutesById {
   '/_tabs/assets': typeof TabsAssetsRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/mine': typeof TabsMineRoute
+  '/moments/create': typeof MomentsCreateRoute
+  '/moments/history': typeof MomentsHistoryRoute
+  '/moments/result': typeof MomentsResultRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -182,6 +209,9 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/moments/create'
+    | '/moments/history'
+    | '/moments/result'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -200,6 +230,9 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/moments/create'
+    | '/moments/history'
+    | '/moments/result'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -219,6 +252,9 @@ export interface FileRouteTypes {
     | '/_tabs/assets'
     | '/_tabs/home'
     | '/_tabs/mine'
+    | '/moments/create'
+    | '/moments/history'
+    | '/moments/result'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -236,6 +272,9 @@ export interface RootRouteChildren {
   ShopLinkRoute: typeof ShopLinkRoute
   ShopProfileRoute: typeof ShopProfileRoute
   FeatureRoute: typeof FeatureRoute
+  MomentsCreateRoute: typeof MomentsCreateRoute
+  MomentsHistoryRoute: typeof MomentsHistoryRoute
+  MomentsResultRoute: typeof MomentsResultRoute
   OnboardingAbilitiesRoute: typeof OnboardingAbilitiesRoute
   OnboardingDemoRoute: typeof OnboardingDemoRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
@@ -336,6 +375,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingAbilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/moments/result': {
+      id: '/moments/result'
+      path: '/moments/result'
+      fullPath: '/moments/result'
+      preLoaderRoute: typeof MomentsResultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moments/history': {
+      id: '/moments/history'
+      path: '/moments/history'
+      fullPath: '/moments/history'
+      preLoaderRoute: typeof MomentsHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moments/create': {
+      id: '/moments/create'
+      path: '/moments/create'
+      fullPath: '/moments/create'
+      preLoaderRoute: typeof MomentsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs/mine': {
       id: '/_tabs/mine'
       path: '/mine'
@@ -391,6 +451,9 @@ const rootRouteChildren: RootRouteChildren = {
   ShopLinkRoute: ShopLinkRoute,
   ShopProfileRoute: ShopProfileRoute,
   FeatureRoute: FeatureRoute,
+  MomentsCreateRoute: MomentsCreateRoute,
+  MomentsHistoryRoute: MomentsHistoryRoute,
+  MomentsResultRoute: MomentsResultRoute,
   OnboardingAbilitiesRoute: OnboardingAbilitiesRoute,
   OnboardingDemoRoute: OnboardingDemoRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
