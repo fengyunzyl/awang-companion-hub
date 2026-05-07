@@ -15,7 +15,7 @@ function Welcome() {
     >
       <div className="flex-1 flex flex-col justify-center">
         <img src={mascot} alt="阿旺" className="w-28 h-28 object-contain mb-6 -ml-2" />
-        <h1 className="font-bold text-text-primary leading-tight mb-4 text-2xl">
+        <h1 className="font-bold text-text-primary leading-tight mb-4 text-xl">
           嗨,我是阿旺
         </h1>
         <p className="text-base text-text-secondary leading-relaxed mb-1">
