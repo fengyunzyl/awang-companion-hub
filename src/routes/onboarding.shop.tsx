@@ -1,30 +1,65 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import { Link2, ImagePlus, X } from "lucide-react";
+import { useState } from "react";
+import { Link2, Pencil, Share2, Copy } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { REGION, PROVINCES } from "@/lib/region";
 
 export const Route = createFileRoute("/onboarding/shop")({
   component: Shop,
   head: () => ({ meta: [{ title: "粘贴店铺链接" }] }),
 });
 
+type ManualInfo = {
+  name: string;
+  category: string;
+  province: string;
+  city: string;
+  district: string;
+  address: string;
+};
+
 function Shop() {
   const nav = useNavigate();
   const [link, setLink] = useState("");
-  const [screenshot, setScreenshot] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
+  const [manual, setManual] = useState<ManualInfo | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [skipOpen, setSkipOpen] = useState(false);
 
-  const submit = () => {
-    if (link) localStorage.setItem("aw_shop_link", link);
-    nav({ to: "/onboarding/reward" });
-  };
-
-  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    const reader = new FileReader();
-    reader.onload = () => setScreenshot(reader.result as string);
-    reader.readAsDataURL(f);
-  };
+  // dialog form state
+  const [form, setForm] = useState<ManualInfo>({
+    name: "",
+    category: "",
+    province: "",
+    city: "",
+    district: "",
+    address: "",
+  });
 
   const platforms = [
     { name: "大众点评", color: "#ffb000", letter: "点" },
@@ -32,107 +67,277 @@ function Shop() {
     { name: "高德", color: "#3eb6ff", letter: "高" },
   ];
 
+  const openManual = () => {
+    if (manual) setForm(manual);
+    setDialogOpen(true);
+  };
+
+  const cities = form.province ? Object.keys(REGION[form.province] ?? {}) : [];
+  const districts =
+    form.province && form.city ? REGION[form.province]?.[form.city] ?? [] : [];
+
+  const canSave =
+    form.name.trim() &&
+    form.category.trim() &&
+    form.province &&
+    form.city &&
+    form.district;
+
+  const saveManual = () => {
+    if (!canSave) return;
+    setManual(form);
+    localStorage.setItem("aw_shop_manual", JSON.stringify(form));
+    setDialogOpen(false);
+  };
+
+  const submit = () => {
+    if (link) localStorage.setItem("aw_shop_link", link);
+    nav({ to: "/onboarding/reward" });
+  };
+
+  const canSubmit = !!link.trim() || !!manual;
+
   return (
     <div
       className="min-h-screen flex flex-col px-6 pt-14 pb-10"
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
       <div className="flex-1">
-        <h1 className="text-xl font-bold text-text-primary mb-2">
-          帮我更懂你
-        </h1>
+        <h1 className="text-xl font-bold text-text-primary mb-2">帮我更懂你</h1>
         <p className="text-sm text-text-secondary leading-relaxed mb-5">
           告诉我你的店铺是哪个,我创作的内容会更贴合你的需要
         </p>
 
-        {/* Link input */}
-        <div className="bg-card rounded-2xl p-4 shadow-card mb-3">
-          <div className="flex items-center justify-start gap-4 mb-3 px-1">
-            {platforms.map((p) => (
-              <div key={p.name} className="flex items-center gap-1.5">
-                <span
-                  className="w-6 h-6 rounded-lg flex items-center justify-center text-[11px] font-bold text-white"
-                  style={{ background: p.color }}
-                >
-                  {p.letter}
-                </span>
-                <span className="text-xs text-text-secondary">{p.name}</span>
+        {manual ? (
+          <div className="bg-card rounded-2xl p-4 shadow-card">
+            <div className="flex items-start justify-between mb-3">
+              <div className="text-base font-semibold text-text-primary">
+                {manual.name}
               </div>
-            ))}
-          </div>
-          <div className="flex items-center gap-2 bg-secondary rounded-xl px-3 py-3">
-            <Link2 className="w-4 h-4 text-text-tertiary shrink-0" />
-            <input
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              placeholder="粘贴店铺链接"
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-tertiary"
-            />
-          </div>
-          <div className="text-xs text-text-tertiary leading-relaxed mt-3 px-1">
-            右上角分享 · 复制链接,
-            <span className="text-info">查看示例图</span>
-          </div>
-        </div>
-
-        {/* Or upload screenshot */}
-        <div className="flex items-center gap-3 my-4">
-          <div className="flex-1 h-px bg-border" />
-          <span className="text-xs text-text-tertiary">不方便复制？</span>
-          <div className="flex-1 h-px bg-border" />
-        </div>
-
-        <div className="bg-card rounded-2xl p-4 shadow-card">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={onFile}
-          />
-          {screenshot ? (
-            <div className="relative">
-              <img
-                src={screenshot}
-                alt="店铺截图"
-                className="w-full max-h-56 object-contain rounded-xl bg-secondary"
-              />
               <button
-                onClick={() => setScreenshot(null)}
-                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center"
-                aria-label="移除"
+                onClick={openManual}
+                className="flex items-center gap-1 text-xs text-info"
               >
-                <X className="w-4 h-4" />
+                <Pencil className="w-3.5 h-3.5" /> 编辑
               </button>
             </div>
-          ) : (
+            <div className="space-y-1.5 text-sm text-text-secondary">
+              <div>类目:{manual.category}</div>
+              <div>
+                地区:{manual.province} / {manual.city} / {manual.district}
+              </div>
+              {manual.address && <div>地址:{manual.address}</div>}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="bg-card rounded-2xl p-4 shadow-card mb-3">
+              <div className="flex items-center justify-start gap-4 mb-3 px-1">
+                {platforms.map((p) => (
+                  <div key={p.name} className="flex items-center gap-1.5">
+                    <span
+                      className="w-6 h-6 rounded-lg flex items-center justify-center text-[11px] font-bold text-white"
+                      style={{ background: p.color }}
+                    >
+                      {p.letter}
+                    </span>
+                    <span className="text-xs text-text-secondary">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-xs text-text-tertiary leading-relaxed mb-3 px-1">
+                打开店铺页 → 右上角分享 → 复制链接
+              </div>
+
+              {/* 示意图 */}
+              <div className="rounded-xl bg-secondary/60 p-4 mb-3 flex items-center justify-around">
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center shadow-sm">
+                    <Share2 className="w-5 h-5 text-text-secondary" />
+                  </div>
+                  <span className="text-[11px] text-text-tertiary">分享</span>
+                </div>
+                <div className="text-text-tertiary text-xs">→</div>
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center shadow-sm">
+                    <Copy className="w-5 h-5 text-text-secondary" />
+                  </div>
+                  <span className="text-[11px] text-text-tertiary">复制链接</span>
+                </div>
+                <div className="text-text-tertiary text-xs">→</div>
+                <div className="flex flex-col items-center gap-1.5">
+                  <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center">
+                    <Link2 className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-[11px] text-text-tertiary">粘贴到此</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2 bg-secondary rounded-xl px-3 py-3 min-h-[96px]">
+                <Link2 className="w-4 h-4 text-text-tertiary shrink-0 mt-1" />
+                <textarea
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="粘贴店铺链接"
+                  rows={3}
+                  className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-tertiary resize-none"
+                />
+              </div>
+            </div>
+
             <button
-              onClick={() => fileRef.current?.click()}
-              className="w-full flex flex-col items-center justify-center gap-2 py-6 rounded-xl border border-dashed border-border bg-secondary/50"
+              onClick={openManual}
+              className="w-full text-sm text-info py-3"
             >
-              <ImagePlus className="w-6 h-6 text-text-tertiary" />
-              <span className="text-sm text-text-secondary">上传店铺截图</span>
-              <span className="text-xs text-text-tertiary">
-                没有链接也可以,截一张店铺主页就行
-              </span>
+              没有店铺链接？手动填写店铺信息
             </button>
-          )}
-        </div>
+          </>
+        )}
       </div>
 
       <button
         onClick={submit}
-        className="bg-primary text-primary-foreground rounded-full font-semibold text-base shadow-button mb-3 mt-6"
+        disabled={!canSubmit}
+        className="bg-primary text-primary-foreground rounded-full font-semibold text-base shadow-button mb-3 mt-6 disabled:opacity-50"
         style={{ height: 52 }}
       >
         领取 100 创作积分
       </button>
       <button
-        onClick={() => nav({ to: "/onboarding/reward" })}
+        onClick={() => setSkipOpen(true)}
         className="text-sm text-text-tertiary py-2"
       >
         以后再填
       </button>
+
+      {/* Manual info dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-[340px] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle>填写店铺信息</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <div className="text-xs text-text-tertiary mb-1.5">店铺名称</div>
+              <Input
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                placeholder="如:阿旺奶茶店"
+              />
+            </div>
+            <div>
+              <div className="text-xs text-text-tertiary mb-1.5">店铺类目</div>
+              <Input
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                placeholder="如:奶茶 / 餐饮 / 美甲"
+              />
+            </div>
+            <div>
+              <div className="text-xs text-text-tertiary mb-1.5">所在地区</div>
+              <div className="grid grid-cols-3 gap-2">
+                <Select
+                  value={form.province}
+                  onValueChange={(v) =>
+                    setForm({ ...form, province: v, city: "", district: "" })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="省" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PROVINCES.map((p) => (
+                      <SelectItem key={p} value={p}>
+                        {p}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={form.city}
+                  onValueChange={(v) =>
+                    setForm({ ...form, city: v, district: "" })
+                  }
+                  disabled={!form.province}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="市" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cities.map((c) => (
+                      <SelectItem key={c} value={c}>
+                        {c}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  value={form.district}
+                  onValueChange={(v) => setForm({ ...form, district: v })}
+                  disabled={!form.city}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="区" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {districts.map((d) => (
+                      <SelectItem key={d} value={d}>
+                        {d}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <div className="text-xs text-text-tertiary mb-1.5">详细地址</div>
+              <Textarea
+                value={form.address}
+                onChange={(e) => setForm({ ...form, address: e.target.value })}
+                placeholder="街道、门牌号等"
+                rows={2}
+              />
+            </div>
+          </div>
+          <DialogFooter className="flex-row gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => setDialogOpen(false)}
+            >
+              取消
+            </Button>
+            <Button
+              className="flex-1"
+              onClick={saveManual}
+              disabled={!canSave}
+            >
+              保存
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Skip confirm */}
+      <AlertDialog open={skipOpen} onOpenChange={setSkipOpen}>
+        <AlertDialogContent className="max-w-[320px] rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>确认跳过？</AlertDialogTitle>
+            <AlertDialogDescription>
+              生成的内容可能无法贴合店铺行业,确认跳过？
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row gap-2">
+            <AlertDialogCancel className="flex-1 mt-0">取消</AlertDialogCancel>
+            <AlertDialogAction
+              className="flex-1"
+              onClick={() => nav({ to: "/onboarding/reward" })}
+            >
+              确认
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
