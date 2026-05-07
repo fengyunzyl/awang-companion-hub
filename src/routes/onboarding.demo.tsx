@@ -19,7 +19,6 @@ type Msg =
   | { from: "awang"; type: "caption"; text: string };
 
 const script: Msg[] = [
-  { from: "user", type: "text", text: "阿旺,帮我看看这张图~" },
   { from: "user", type: "image", src: demoBefore },
   { from: "awang", type: "typing" },
   { from: "awang", type: "text", text: "收到啦,我先帮你修一下图 ✨" },
