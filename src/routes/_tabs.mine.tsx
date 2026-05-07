@@ -10,7 +10,7 @@ function Mine() {
   return (
     <div className="pt-12 pb-6">
       <div className="px-5 flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 rounded-full bg-gradient-brand flex items-center justify-center text-3xl shadow-card">
+        <div className="w-10 h-10 rounded-full bg-gradient-brand flex items-center justify-center text-xl shadow-card">
           🐶
         </div>
         <div>
