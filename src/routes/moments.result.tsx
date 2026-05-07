@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, MoreHorizontal, Copy, RefreshCw, Wand2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { MomentsConfig, ModelPicker } from "@/components/aw/MomentsConfig";
+import { MomentsConfig, ModelPicker, ModelChip } from "@/components/aw/MomentsConfig";
 import {
   COST,
   type MomentsParams,
@@ -208,9 +208,11 @@ function Result() {
             <div className="mt-4">
               <MomentsConfig
                 value={draftParams}
-                onChange={setDraftParams}
-                onPickModel={() => setModelOpen(true)}
+                onChange={(v) => setDraftParams(v)}
               />
+              <div className="mt-3">
+                <ModelChip value={draftParams.model} onClick={() => setModelOpen(true)} />
+              </div>
               <button
                 onClick={() => {
                   setConfigOpen(false);

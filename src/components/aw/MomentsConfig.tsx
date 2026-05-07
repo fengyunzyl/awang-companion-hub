@@ -1,6 +1,5 @@
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { ChevronRight } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import {
   type MomentsParams,
   type ResultType,
@@ -11,7 +10,7 @@ import {
   MODEL_LABEL,
 } from "@/lib/moments";
 
-function Chip({
+function Tile({
   active,
   onClick,
   children,
@@ -25,10 +24,10 @@ function Chip({
       type="button"
       onClick={onClick}
       className={
-        "px-3.5 h-8 rounded-full text-xs font-medium transition-colors border " +
+        "h-12 rounded-xl text-sm font-medium transition-colors border flex items-center justify-center gap-1.5 " +
         (active
-          ? "bg-primary text-primary-foreground border-primary"
-          : "bg-secondary text-text-secondary border-transparent")
+          ? "bg-primary-light/60 border-primary text-primary-dark"
+          : "bg-card border-border text-text-primary")
       }
     >
       {children}
@@ -36,23 +35,16 @@ function Chip({
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="bg-card rounded-2xl p-4 shadow-card">
-      <div className="text-sm font-semibold text-text-primary mb-3">{title}</div>
-      {children}
-    </div>
-  );
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return <div className="text-sm font-semibold text-text-primary mb-2.5 mt-1">{children}</div>;
 }
 
 export function MomentsConfig({
   value,
   onChange,
-  onPickModel,
 }: {
   value: MomentsParams;
   onChange: (v: MomentsParams) => void;
-  onPickModel: () => void;
 }) {
   const set = <K extends keyof MomentsParams>(k: K, v: MomentsParams[K]) =>
     onChange({ ...value, [k]: v });
@@ -60,79 +52,103 @@ export function MomentsConfig({
   const themes: Theme[] = ["daily", "new", "festival", "review"];
 
   return (
-    <div className="space-y-3">
-      <Section title="创作结果">
-        <div className="flex gap-2">
-          {(
-            [
-              ["text_image", "图+朋友圈文案"],
-              ["only_image", "只需要图"],
-            ] as [ResultType, string][]
-          ).map(([k, l]) => (
-            <Chip key={k} active={value.resultType === k} onClick={() => set("resultType", k)}>
-              {l}
-            </Chip>
-          ))}
-        </div>
-      </Section>
+    <div className="space-y-1">
+      <SectionLabel>想要什么？</SectionLabel>
+      <div className="grid grid-cols-2 gap-3">
+        {(
+          [
+            ["text_image", "图+文"],
+            ["only_image", "只需要图"],
+          ] as [ResultType, string][]
+        ).map(([k, l]) => (
+          <Tile key={k} active={value.resultType === k} onClick={() => set("resultType", k)}>
+            {l}
+          </Tile>
+        ))}
+      </div>
 
-      <Section title="生成模式">
-        <div className="flex gap-2">
-          {(
-            [
-              ["smart", "智能模式"],
-              ["custom", "自定义"],
-            ] as [GenMode, string][]
-          ).map(([k, l]) => (
-            <Chip key={k} active={value.mode === k} onClick={() => set("mode", k)}>
-              {l}
-            </Chip>
-          ))}
-        </div>
-        {value.mode === "custom" && (
-          <Textarea
-            value={value.customPrompt}
-            onChange={(e) => set("customPrompt", e.target.value)}
-            placeholder="请简单输入对图片的要求,如风格、标题、副标题等内容"
-            className="mt-3 bg-secondary border-0 text-sm"
-            rows={3}
-          />
-        )}
-      </Section>
-
-      <Section title="创作主题">
-        <div className="flex gap-2 flex-wrap">
-          {themes.map((t) => (
-            <Chip key={t} active={value.theme === t} onClick={() => set("theme", t)}>
-              {THEME_LABEL[t]}
-            </Chip>
-          ))}
-        </div>
-      </Section>
-
-      <div className="bg-card rounded-2xl px-4 py-3.5 shadow-card flex items-center justify-between">
-        <div>
-          <div className="text-sm font-medium text-text-primary">不在图片上添加文字</div>
-          <div className="text-xs text-text-tertiary mt-0.5">开启后图片上不叠加文案</div>
-        </div>
-        <Switch
-          checked={value.noTextOnImage}
-          onCheckedChange={(v) => set("noTextOnImage", v)}
+      <SectionLabel>生成模式</SectionLabel>
+      <div className="grid grid-cols-2 gap-3">
+        {(
+          [
+            ["smart", "智能模式"],
+            ["custom", "自定义"],
+          ] as [GenMode, string][]
+        ).map(([k, l]) => (
+          <Tile key={k} active={value.mode === k} onClick={() => set("mode", k)}>
+            {k === "smart" && (
+              <Sparkles className={"w-3.5 h-3.5 " + (value.mode === "smart" ? "text-primary" : "text-text-tertiary")} />
+            )}
+            {l}
+          </Tile>
+        ))}
+      </div>
+      {value.mode === "custom" && (
+        <Textarea
+          value={value.customPrompt}
+          onChange={(e) => set("customPrompt", e.target.value)}
+          placeholder="请简单输入对图片的要求,如风格、标题、副标题等内容"
+          className="mt-3 bg-card border-border text-sm rounded-xl"
+          rows={3}
         />
+      )}
+
+      <SectionLabel>选择创作主题</SectionLabel>
+      <div className="grid grid-cols-2 gap-3">
+        {themes.map((t) => (
+          <Tile key={t} active={value.theme === t} onClick={() => set("theme", t)}>
+            {THEME_LABEL[t]}
+          </Tile>
+        ))}
       </div>
 
       <button
         type="button"
-        onClick={onPickModel}
-        className="w-full bg-card rounded-2xl px-4 py-3.5 shadow-card flex items-center justify-between"
+        onClick={() => set("noTextOnImage", !value.noTextOnImage)}
+        className="mt-5 flex items-center gap-2 text-sm text-text-primary"
       >
-        <div className="text-sm font-medium text-text-primary">生成模型</div>
-        <div className="flex items-center gap-1 text-text-tertiary">
-          <span className="text-sm">{MODEL_LABEL[value.model]}</span>
-          <ChevronRight className="w-4 h-4" />
-        </div>
+        <span
+          className={
+            "w-[18px] h-[18px] rounded-full border flex items-center justify-center " +
+            (value.noTextOnImage ? "bg-primary border-primary" : "border-text-tertiary")
+          }
+        >
+          {value.noTextOnImage && <Check className="w-3 h-3 text-primary-foreground" strokeWidth={3} />}
+        </span>
+        我不想在图片上添加文字
       </button>
     </div>
+  );
+}
+
+const MODEL_BADGE: Record<ModelKey, { letter: string; bg: string }> = {
+  standard: { letter: "S", bg: "bg-[#7c6cf0]" },
+  pro: { letter: "P", bg: "bg-[#22b07d]" },
+  lite: { letter: "L", bg: "bg-[#ff7849]" },
+};
+
+export function ModelChip({
+  value,
+  onClick,
+}: {
+  value: ModelKey;
+  onClick: () => void;
+}) {
+  const b = MODEL_BADGE[value];
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex items-center gap-2 bg-card rounded-full pl-1 pr-3 py-1 border border-border"
+    >
+      <span className={"w-7 h-7 rounded-full text-white text-xs font-semibold flex items-center justify-center " + b.bg}>
+        {b.letter}
+      </span>
+      <span className="text-left leading-tight">
+        <span className="block text-[10px] text-text-tertiary">当前模型</span>
+        <span className="block text-xs font-semibold text-text-primary">{MODEL_LABEL[value]}</span>
+      </span>
+    </button>
   );
 }
 
@@ -149,32 +165,35 @@ export function ModelPicker({
     { key: "lite", desc: "生成速度更快,适合快速预览" },
   ];
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {items.map((it) => {
         const active = value === it.key;
+        const b = MODEL_BADGE[it.key];
         return (
           <button
             key={it.key}
             type="button"
             onClick={() => onChange(it.key)}
             className={
-              "w-full text-left rounded-2xl p-4 border transition-colors " +
-              (active
-                ? "border-primary bg-primary-light/40"
-                : "border-border bg-card")
+              "w-full text-left rounded-2xl p-3 flex items-center gap-3 transition-colors " +
+              (active ? "bg-primary-light/40" : "bg-transparent")
             }
           >
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold text-text-primary">
-                {MODEL_LABEL[it.key]}
-              </span>
-              {it.recommended && (
-                <span className="text-[10px] font-medium text-primary-dark bg-primary-light rounded-full px-2 py-0.5">
-                  推荐
-                </span>
-              )}
+            <span className={"w-11 h-11 rounded-xl text-white text-base font-semibold flex items-center justify-center shrink-0 " + b.bg}>
+              {b.letter}
+            </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-text-primary">{MODEL_LABEL[it.key]}</span>
+                {it.recommended && (
+                  <span className="text-[10px] font-medium text-primary-dark bg-primary-light rounded-full px-2 py-0.5">
+                    推荐
+                  </span>
+                )}
+              </div>
+              <div className="text-xs text-text-tertiary mt-0.5">{it.desc}</div>
             </div>
-            <div className="text-xs text-text-tertiary mt-1">{it.desc}</div>
+            {active && <Check className="w-5 h-5 text-primary" strokeWidth={3} />}
           </button>
         );
       })}
