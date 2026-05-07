@@ -63,8 +63,8 @@ function Demo() {
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
       <div className="px-6 pt-10 pb-3">
-        <h1 className="text-xl font-bold text-text-primary">给我一张图</h1>
-        <p className="text-sm text-text-secondary mt-1">修图、配文案，我来一起搞定</p>
+        <h1 className="text-xl font-bold text-text-primary">修图，写文案，我来负责搞定</h1>
+        <p className="text-sm text-text-secondary mt-1">给我一张图，我来帮你做</p>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
