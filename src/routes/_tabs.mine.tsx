@@ -14,7 +14,7 @@ function Mine() {
           🐶
         </div>
         <div>
-          <div className="text-text-secondary text-base">138****1234</div>
+          <div className="text-text-secondary text-lg">138****1234</div>
         </div>
       </div>
 
