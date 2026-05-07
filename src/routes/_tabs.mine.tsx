@@ -13,6 +13,9 @@ function Mine() {
         <div className="w-16 h-16 rounded-full bg-gradient-brand flex items-center justify-center text-3xl shadow-card">
           🐶
         </div>
+        <div>
+          <div className="text-sm text-text-secondary">138****1234</div>
+        </div>
       </div>
 
       <div className="px-4">
