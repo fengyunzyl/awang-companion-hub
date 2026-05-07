@@ -39,10 +39,10 @@ function Shop() {
     >
       <div className="flex-1">
         <h1 className="text-xl font-bold text-text-primary mb-2">
-          粘贴店铺链接
+          帮我更懂你
         </h1>
         <p className="text-sm text-text-secondary leading-relaxed mb-5">
-          我创作的内容会更贴合你的店铺哦
+          告诉我你的店铺是哪个,我创作的内容会更贴合你的需要
         </p>
 
         {/* Link input */}
@@ -78,7 +78,7 @@ function Shop() {
         {/* Or upload screenshot */}
         <div className="flex items-center gap-3 my-4">
           <div className="flex-1 h-px bg-border" />
-          <span className="text-xs text-text-tertiary">或</span>
+          <span className="text-xs text-text-tertiary">不方便复制？</span>
           <div className="flex-1 h-px bg-border" />
         </div>
 
