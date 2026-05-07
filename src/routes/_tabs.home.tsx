@@ -32,19 +32,6 @@ function Home() {
         </Link>
       </div>
 
-      {/* Hero banner */}
-      <div className="rounded-2xl p-5 bg-gradient-brand text-white mb-5 relative overflow-hidden shadow-card">
-        <div className="relative z-10">
-          <div className="text-xs opacity-90 mb-1">每日热点 · 5月8日</div>
-          <h2 className="text-lg font-bold mb-1 leading-snug">母亲节文案已上新</h2>
-          <p className="text-xs opacity-95 mb-3">一键生成,马上可发</p>
-          <button className="bg-white text-primary text-xs font-semibold rounded-full px-4 py-1.5">
-            立即查看
-          </button>
-        </div>
-        <div className="absolute right-2 bottom-0 text-7xl opacity-30">🌸</div>
-      </div>
-
       {/* Features grid */}
       <div className="grid grid-cols-2 gap-3 mb-5">
         {features.map((f) => {
