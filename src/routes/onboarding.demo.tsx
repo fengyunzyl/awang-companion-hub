@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, ImagePlus } from "lucide-react";
 import demoBefore from "@/assets/demo-before.jpg";
 import demoAfter from "@/assets/demo-after.jpg";
 import mascot from "@/assets/awang-mascot.png";
@@ -33,24 +33,26 @@ const script: Msg[] = [
 ];
 
 function Demo() {
+  const [started, setStarted] = useState(false);
   const [count, setCount] = useState(1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const done = count >= script.length;
 
   useEffect(() => {
+    if (!started) return;
     if (done) return;
     const next = script[count];
     const delay = next?.type === "typing" ? 300 : 400;
     const t = setTimeout(() => setCount((c) => c + 1), delay);
     return () => clearTimeout(t);
-  }, [count, done]);
+  }, [count, done, started]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [count]);
+  }, [count, started]);
 
   // Collapse: hide a typing bubble once the next message after it has appeared
-  const visible = script.slice(0, count).filter((m, i, arr) => {
+  const visible = (started ? script.slice(0, count) : []).filter((m, i, arr) => {
     if (m.type === "typing") return i === arr.length - 1;
     return true;
   });
@@ -69,6 +71,16 @@ function Demo() {
         {visible.map((m, i) => (
           <Bubble key={i} msg={m} />
         ))}
+        {!started && (
+          <button
+            type="button"
+            onClick={() => setStarted(true)}
+            className="w-full flex flex-col items-center justify-center gap-2 py-10 rounded-2xl border-2 border-dashed border-primary/40 bg-card/60 text-text-secondary hover:bg-card transition-colors"
+          >
+            <ImagePlus className="w-8 h-8 text-primary" />
+            <span className="text-sm font-medium">上传一张示例图</span>
+          </button>
+        )}
       </div>
 
       <div className="px-6 pb-8 pt-2">
