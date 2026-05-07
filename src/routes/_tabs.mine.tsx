@@ -56,9 +56,7 @@ function Mine() {
               <Link
                 key={it.label}
                 to={it.to}
-                className={`flex items-center gap-3 px-4 py-3.5 ${
-                  i < arr.length - 1 ? "border-b border-border" : ""
-                }`}
+                className={`flex items-center gap-3 px-4 border-b border-border border-none py-[20px]`}
               >
                 <Icon className="w-5 h-5 text-primary" />
                 <span className="flex-1 text-sm text-text-primary">{it.label}</span>
