@@ -63,7 +63,7 @@ function Demo() {
       style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}
     >
       <div className="px-6 pt-10 pb-3">
-        <h1 className="text-xl font-bold text-text-primary">给我一张图</h1>
+        <h1 className="text-xl font-bold text-text-primary">给我一张商品图</h1>
         <p className="text-sm text-text-secondary mt-1">修图，写文案，我来负责搞定</p>
       </div>
 
