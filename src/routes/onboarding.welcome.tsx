@@ -15,8 +15,8 @@ function Welcome() {
     >
       <div className="flex-1 flex flex-col justify-center items-center text-center">
         <img src={mascot} alt="阿旺" className="w-[134px] h-[134px] object-contain mb-6" />
-        <h1 className="font-bold text-text-primary leading-tight mb-4 text-xl">
-          嗨,我是阿旺
+        <h1 className="font-bold text-text-primary leading-tight mb-4 text-base">
+          嗨，我是门店创作助手-阿旺
         </h1>
         <p className="text-base text-text-secondary leading-relaxed mb-1">
           给我一张你的商品照片
