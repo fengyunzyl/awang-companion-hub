@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_tabs")({
 
 const tabs = [
   { to: "/home", label: "首页", icon: Home },
-  { to: "/assets", label: "资产", icon: FolderOpen },
+  { to: "/assets", label: "作品", icon: FolderOpen },
   { to: "/mine", label: "我的", icon: User },
 ] as const;
 

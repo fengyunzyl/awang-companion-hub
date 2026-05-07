@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const Route = createFileRoute("/_tabs/assets")({
   component: Assets,
-  head: () => ({ meta: [{ title: "我的资产" }] }),
+  head: () => ({ meta: [{ title: "我的作品" }] }),
 });
 
 const tagColor: Record<string, string> = {
@@ -31,9 +31,9 @@ function Assets() {
   const [tab, setTab] = useState<"r" | "u">("r");
   return (
     <div className="px-4 pt-3 pb-6">
-      <div className="flex items-center justify-center gap-6 py-3 mb-3">
+      <div className="flex items-center gap-6 py-3 mb-3">
         {[
-          { k: "r" as const, label: "创作结果" },
+          { k: "r" as const, label: "创作作品" },
           { k: "u" as const, label: "历史上传" },
         ].map((t) => (
           <button
