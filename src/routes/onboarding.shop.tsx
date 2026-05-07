@@ -45,23 +45,21 @@ function Shop() {
           我创作的内容会更贴合你的店铺哦
         </p>
 
-        {/* Platforms — moved above */}
-        <div className="flex items-center justify-around mb-4 px-2">
-          {platforms.map((p) => (
-            <div key={p.name} className="flex flex-col items-center gap-1.5">
-              <span
-                className="w-11 h-11 rounded-2xl flex items-center justify-center text-base font-bold text-white shadow-card"
-                style={{ background: p.color }}
-              >
-                {p.letter}
-              </span>
-              <span className="text-xs text-text-secondary">{p.name}</span>
-            </div>
-          ))}
-        </div>
-
         {/* Link input */}
         <div className="bg-card rounded-2xl p-4 shadow-card mb-3">
+          <div className="flex items-center justify-start gap-4 mb-3 px-1">
+            {platforms.map((p) => (
+              <div key={p.name} className="flex items-center gap-1.5">
+                <span
+                  className="w-6 h-6 rounded-lg flex items-center justify-center text-[11px] font-bold text-white"
+                  style={{ background: p.color }}
+                >
+                  {p.letter}
+                </span>
+                <span className="text-xs text-text-secondary">{p.name}</span>
+              </div>
+            ))}
+          </div>
           <div className="flex items-center gap-2 bg-secondary rounded-xl px-3 py-3">
             <Link2 className="w-4 h-4 text-text-tertiary shrink-0" />
             <input
