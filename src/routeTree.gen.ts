@@ -20,6 +20,7 @@ import { Route as OnboardingWelcomeRouteImport } from './routes/onboarding.welco
 import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
 import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
 import { Route as OnboardingDemoRouteImport } from './routes/onboarding.demo'
+import { Route as OnboardingAbilitiesRouteImport } from './routes/onboarding.abilities'
 import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
 import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
 import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
@@ -79,6 +80,11 @@ const OnboardingDemoRoute = OnboardingDemoRouteImport.update({
   path: '/onboarding/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingAbilitiesRoute = OnboardingAbilitiesRouteImport.update({
+  id: '/onboarding/abilities',
+  path: '/onboarding/abilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsMineRoute = TabsMineRouteImport.update({
   id: '/mine',
   path: '/mine',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -145,6 +153,7 @@ export interface FileRoutesById {
   '/_tabs/assets': typeof TabsAssetsRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/mine': typeof TabsMineRoute
+  '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
   '/onboarding/shop': typeof OnboardingShopRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/assets'
     | '/home'
     | '/mine'
+    | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/_tabs/assets'
     | '/_tabs/home'
     | '/_tabs/mine'
+    | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
     | '/onboarding/shop'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ShopProfileRoute: typeof ShopProfileRoute
   FeatureRoute: typeof FeatureRoute
+  OnboardingAbilitiesRoute: typeof OnboardingAbilitiesRoute
   OnboardingDemoRoute: typeof OnboardingDemoRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
   OnboardingShopRoute: typeof OnboardingShopRoute
@@ -296,6 +309,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/abilities': {
+      id: '/onboarding/abilities'
+      path: '/onboarding/abilities'
+      fullPath: '/onboarding/abilities'
+      preLoaderRoute: typeof OnboardingAbilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs/mine': {
       id: '/_tabs/mine'
       path: '/mine'
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ShopProfileRoute: ShopProfileRoute,
   FeatureRoute: FeatureRoute,
+  OnboardingAbilitiesRoute: OnboardingAbilitiesRoute,
   OnboardingDemoRoute: OnboardingDemoRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
   OnboardingShopRoute: OnboardingShopRoute,
