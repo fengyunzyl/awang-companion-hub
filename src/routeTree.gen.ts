@@ -22,10 +22,10 @@ import { Route as OnboardingShopRouteImport } from './routes/onboarding.shop'
 import { Route as OnboardingRewardRouteImport } from './routes/onboarding.reward'
 import { Route as OnboardingDemoRouteImport } from './routes/onboarding.demo'
 import { Route as OnboardingAbilitiesRouteImport } from './routes/onboarding.abilities'
+import { Route as FeatureKeyRouteImport } from './routes/feature.$key'
 import { Route as TabsMineRouteImport } from './routes/_tabs.mine'
 import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
 import { Route as TabsAssetsRouteImport } from './routes/_tabs.assets'
-import { Route as FeatureRouteImport } from './routes/feature.'
 
 const ShopProfileRoute = ShopProfileRouteImport.update({
   id: '/shop-profile',
@@ -91,6 +91,11 @@ const OnboardingAbilitiesRoute = OnboardingAbilitiesRouteImport.update({
   path: '/onboarding/abilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeatureKeyRoute = FeatureKeyRouteImport.update({
+  id: '/feature/$key',
+  path: '/feature/$key',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsMineRoute = TabsMineRouteImport.update({
   id: '/mine',
   path: '/mine',
@@ -106,11 +111,6 @@ const TabsAssetsRoute = TabsAssetsRouteImport.update({
   path: '/assets',
   getParentRoute: () => TabsRoute,
 } as any)
-const FeatureRoute = FeatureRouteImport.update({
-  id: '/feature/',
-  path: '/feature/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -120,10 +120,10 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
-  '/feature/': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/feature/$key': typeof FeatureKeyRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -138,10 +138,10 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
-  '/feature': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
   '/home': typeof TabsHomeRoute
   '/mine': typeof TabsMineRoute
+  '/feature/$key': typeof FeatureKeyRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -158,10 +158,10 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
-  '/feature/': typeof FeatureRoute
   '/_tabs/assets': typeof TabsAssetsRoute
   '/_tabs/home': typeof TabsHomeRoute
   '/_tabs/mine': typeof TabsMineRoute
+  '/feature/$key': typeof FeatureKeyRoute
   '/onboarding/abilities': typeof OnboardingAbilitiesRoute
   '/onboarding/demo': typeof OnboardingDemoRoute
   '/onboarding/reward': typeof OnboardingRewardRoute
@@ -178,10 +178,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/shop-link'
     | '/shop-profile'
-    | '/feature/'
     | '/assets'
     | '/home'
     | '/mine'
+    | '/feature/$key'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -196,10 +196,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/shop-link'
     | '/shop-profile'
-    | '/feature'
     | '/assets'
     | '/home'
     | '/mine'
+    | '/feature/$key'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -215,10 +215,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/shop-link'
     | '/shop-profile'
-    | '/feature/'
     | '/_tabs/assets'
     | '/_tabs/home'
     | '/_tabs/mine'
+    | '/feature/$key'
     | '/onboarding/abilities'
     | '/onboarding/demo'
     | '/onboarding/reward'
@@ -235,7 +235,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ShopLinkRoute: typeof ShopLinkRoute
   ShopProfileRoute: typeof ShopProfileRoute
-  FeatureRoute: typeof FeatureRoute
+  FeatureKeyRoute: typeof FeatureKeyRoute
   OnboardingAbilitiesRoute: typeof OnboardingAbilitiesRoute
   OnboardingDemoRoute: typeof OnboardingDemoRoute
   OnboardingRewardRoute: typeof OnboardingRewardRoute
@@ -336,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingAbilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/feature/$key': {
+      id: '/feature/$key'
+      path: '/feature/$key'
+      fullPath: '/feature/$key'
+      preLoaderRoute: typeof FeatureKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_tabs/mine': {
       id: '/_tabs/mine'
       path: '/mine'
@@ -356,13 +363,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/assets'
       preLoaderRoute: typeof TabsAssetsRouteImport
       parentRoute: typeof TabsRoute
-    }
-    '/feature/': {
-      id: '/feature/'
-      path: '/feature'
-      fullPath: '/feature/'
-      preLoaderRoute: typeof FeatureRouteImport
-      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -390,7 +390,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ShopLinkRoute: ShopLinkRoute,
   ShopProfileRoute: ShopProfileRoute,
-  FeatureRoute: FeatureRoute,
+  FeatureKeyRoute: FeatureKeyRoute,
   OnboardingAbilitiesRoute: OnboardingAbilitiesRoute,
   OnboardingDemoRoute: OnboardingDemoRoute,
   OnboardingRewardRoute: OnboardingRewardRoute,
@@ -400,3 +400,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
