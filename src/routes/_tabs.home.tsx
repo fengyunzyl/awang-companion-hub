@@ -20,7 +20,7 @@ function Home() {
   return (
     <div className="px-4 pt-3 pb-6 min-h-screen" style={{ background: "#fafafa" }}>
       {/* Top bar */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 py-[12px]">
         <div className="font-bold text-text-primary leading-tight text-lg">阿旺</div>
         <Link
           to="/points"
