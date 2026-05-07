@@ -19,10 +19,10 @@ function Welcome() {
           嗨,我是阿旺
         </h1>
         <p className="text-base text-text-secondary leading-relaxed mb-1">
-          只需要给我一张照片
+          给我一张你的商品照片
         </p>
         <p className="text-base text-text-secondary leading-relaxed">
-          我就可以帮你
+          我帮你
           <span className="text-text-primary font-semibold">修图、写文案、做海报</span>
         </p>
       </div>
