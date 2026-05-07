@@ -46,7 +46,7 @@ function Mine() {
         <div className="bg-card rounded-2xl shadow-card overflow-hidden">
           {[
             { to: "/invite" as const, icon: Gift, label: "邀请有礼", sub: "+50 积分/人" },
-            { to: "/shop-profile" as const, icon: Store, label: "店铺档案", sub: "未完善" },
+            { to: "/shop-link" as const, icon: Store, label: "店铺档案", sub: "未完善" },
             { to: "/agreement" as const, icon: FileText, label: "用户协议", sub: "" },
             { to: "/privacy" as const, icon: Shield, label: "隐私政策", sub: "" },
           ].map((it, i, arr) => {
