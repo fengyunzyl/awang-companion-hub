@@ -212,7 +212,7 @@ function Shop() {
 
       {/* Manual info dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-[340px] rounded-2xl">
+        <DialogContent className="max-w-[340px] rounded-2xl data-[state=closed]:slide-out-to-left-0 data-[state=open]:slide-in-from-left-0 data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0">
           <DialogHeader>
             <DialogTitle>填写店铺信息</DialogTitle>
           </DialogHeader>
@@ -320,7 +320,7 @@ function Shop() {
 
       {/* Skip confirm */}
       <AlertDialog open={skipOpen} onOpenChange={setSkipOpen}>
-        <AlertDialogContent className="max-w-[320px] rounded-2xl">
+        <AlertDialogContent className="max-w-[320px] rounded-2xl data-[state=closed]:slide-out-to-left-0 data-[state=open]:slide-in-from-left-0 data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0">
           <AlertDialogHeader>
             <AlertDialogTitle>确认跳过？</AlertDialogTitle>
             <AlertDialogDescription>
