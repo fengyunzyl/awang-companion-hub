@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Link2, Pencil, Share2, Copy } from "lucide-react";
+import { Link2, Pencil, Share2, Copy, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -50,6 +50,7 @@ function Shop() {
   const [manual, setManual] = useState<ManualInfo | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   // dialog form state
   const [form, setForm] = useState<ManualInfo>({
@@ -114,12 +115,20 @@ function Shop() {
               <div className="text-base font-semibold text-text-primary">
                 {manual.name}
               </div>
-              <button
-                onClick={openManual}
-                className="flex items-center gap-1 text-xs text-info"
-              >
-                <Pencil className="w-3.5 h-3.5" /> 编辑
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={openManual}
+                  className="flex items-center gap-1 text-xs text-info"
+                >
+                  <Pencil className="w-3.5 h-3.5" /> 编辑
+                </button>
+                <button
+                  onClick={() => setDeleteOpen(true)}
+                  className="flex items-center gap-1 text-xs text-text-tertiary"
+                >
+                  <Trash2 className="w-3.5 h-3.5" /> 删除
+                </button>
+              </div>
             </div>
             <div className="space-y-1.5 text-sm text-text-secondary">
               <div>类目:{manual.category}</div>
@@ -332,6 +341,37 @@ function Shop() {
               onClick={() => nav({ to: "/onboarding/reward" })}
             >
               确认
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete confirm */}
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent className="max-w-[320px] rounded-2xl !slide-in-from-left-0 !slide-in-from-top-0 !slide-out-to-left-0 !slide-out-to-top-0">
+          <AlertDialogHeader>
+            <AlertDialogTitle>确认删除？</AlertDialogTitle>
+            <AlertDialogDescription>删除后店铺信息将被清空，需要重新填写。</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex-row gap-2">
+            <AlertDialogCancel className="flex-1 mt-0">取消</AlertDialogCancel>
+            <AlertDialogAction
+              className="flex-1"
+              onClick={() => {
+                setManual(null);
+                localStorage.removeItem("aw_shop_manual");
+                setForm({
+                  name: "",
+                  category: "",
+                  province: "",
+                  city: "",
+                  district: "",
+                  address: "",
+                });
+                setDeleteOpen(false);
+              }}
+            >
+              确认删除
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
