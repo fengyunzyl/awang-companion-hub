@@ -4,7 +4,7 @@ import { Upload, Sparkles, ImagePlus, ChevronDown, Check } from "lucide-react";
 import { PageHeader } from "@/components/aw/PageHeader";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/feature/")({
+export const Route = createFileRoute("/feature/$key")({
   component: Feature,
 });
 
