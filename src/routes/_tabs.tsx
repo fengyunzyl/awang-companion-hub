@@ -18,7 +18,7 @@ function TabsLayout() {
       <div className="flex-1">
         <Outlet />
       </div>
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card border-t border-border h-[68px] flex">
+      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-card h-[68px] flex">
         {tabs.map(({ to, label, icon: Icon }) => {
           const active = loc.pathname === to;
           return (
