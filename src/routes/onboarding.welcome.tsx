@@ -11,11 +11,11 @@ function Welcome() {
     <div className="min-h-screen flex flex-col bg-gradient-primary px-8 py-16">
       <div className="flex-1 flex flex-col justify-center">
         <div className="text-7xl mb-8">👋</div>
-        <h1 className="text-3xl font-bold text-text-primary leading-tight mb-4">
+        <h1 className="font-bold text-text-primary leading-tight mb-4 text-2xl">
           嗨,我是阿旺
         </h1>
         <p className="text-base text-text-secondary leading-relaxed mb-2">
-          帮你做海报、写文案的小帮手
+          我可以帮你做海报、写文案
         </p>
         <p className="text-base text-text-secondary leading-relaxed">
           给我一张照片,30 秒就能出内容
