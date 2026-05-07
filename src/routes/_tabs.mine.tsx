@@ -21,7 +21,7 @@ function Mine() {
 
       <div className="px-4">
         <div className="bg-gradient-points rounded-2xl p-5 text-white shadow-card mb-4">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 py-[12px]">
             <span className="text-sm opacity-95">我的积分</span>
             <Link to="/points" className="text-xs bg-white/25 rounded-full px-3 py-1">
               明细 ›
