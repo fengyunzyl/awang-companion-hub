@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopProfileRouteImport } from './routes/shop-profile'
+import { Route as ShopLinkRouteImport } from './routes/shop-link'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PointsRouteImport } from './routes/points'
 import { Route as InviteRouteImport } from './routes/invite'
@@ -29,6 +30,11 @@ import { Route as FeatureRouteImport } from './routes/feature.'
 const ShopProfileRoute = ShopProfileRouteImport.update({
   id: '/shop-profile',
   path: '/shop-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopLinkRoute = ShopLinkRouteImport.update({
+  id: '/shop-link',
+  path: '/shop-link',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/invite': typeof InviteRoute
   '/points': typeof PointsRoute
   '/privacy': typeof PrivacyRoute
+  '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
   '/feature/': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/invite': typeof InviteRoute
   '/points': typeof PointsRoute
   '/privacy': typeof PrivacyRoute
+  '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
   '/feature': typeof FeatureRoute
   '/assets': typeof TabsAssetsRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/invite': typeof InviteRoute
   '/points': typeof PointsRoute
   '/privacy': typeof PrivacyRoute
+  '/shop-link': typeof ShopLinkRoute
   '/shop-profile': typeof ShopProfileRoute
   '/feature/': typeof FeatureRoute
   '/_tabs/assets': typeof TabsAssetsRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/invite'
     | '/points'
     | '/privacy'
+    | '/shop-link'
     | '/shop-profile'
     | '/feature/'
     | '/assets'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/invite'
     | '/points'
     | '/privacy'
+    | '/shop-link'
     | '/shop-profile'
     | '/feature'
     | '/assets'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/invite'
     | '/points'
     | '/privacy'
+    | '/shop-link'
     | '/shop-profile'
     | '/feature/'
     | '/_tabs/assets'
@@ -221,6 +233,7 @@ export interface RootRouteChildren {
   InviteRoute: typeof InviteRoute
   PointsRoute: typeof PointsRoute
   PrivacyRoute: typeof PrivacyRoute
+  ShopLinkRoute: typeof ShopLinkRoute
   ShopProfileRoute: typeof ShopProfileRoute
   FeatureRoute: typeof FeatureRoute
   OnboardingAbilitiesRoute: typeof OnboardingAbilitiesRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       path: '/shop-profile'
       fullPath: '/shop-profile'
       preLoaderRoute: typeof ShopProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop-link': {
+      id: '/shop-link'
+      path: '/shop-link'
+      fullPath: '/shop-link'
+      preLoaderRoute: typeof ShopLinkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -368,6 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   InviteRoute: InviteRoute,
   PointsRoute: PointsRoute,
   PrivacyRoute: PrivacyRoute,
+  ShopLinkRoute: ShopLinkRoute,
   ShopProfileRoute: ShopProfileRoute,
   FeatureRoute: FeatureRoute,
   OnboardingAbilitiesRoute: OnboardingAbilitiesRoute,
