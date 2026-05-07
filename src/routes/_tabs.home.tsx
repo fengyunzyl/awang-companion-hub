@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_tabs/home")({
 });
 
 const features = [
-  { key: "moments", title: "朋友圈图文", desc: "图+文一起出", icon: Sparkles, bg: "linear-gradient(135deg,#fff1d6,#ffd693)" },
+  { key: "moments", title: "朋友圈图文", desc: "图+文一起出", icon: Sparkles, bg: "linear-gradient(135deg,#fff1d6,#ffd693)", to: "/moments/create" as const },
   { key: "product", title: "商品头图", desc: "突出卖点", icon: ShoppingBag, bg: "linear-gradient(135deg,#ffe5d6,#ffc098)" },
   { key: "xhs", title: "小红书封面", desc: "高点击标题", icon: BookOpen, bg: "linear-gradient(135deg,#ffd9e4,#ffb0c8)" },
   { key: "poster", title: "创意海报", desc: "一键排版", icon: Layout, bg: "linear-gradient(135deg,#e0e6ff,#b8c4ff)" },
@@ -36,11 +36,13 @@ function Home() {
       <div className="grid grid-cols-2 gap-3 mb-5">
         {features.map((f) => {
           const Icon = f.icon;
+          const linkProps = f.to
+            ? ({ to: f.to } as const)
+            : ({ to: "/feature/$key", params: { key: f.key } } as const);
           return (
             <Link
               key={f.key}
-              to="/feature/$key"
-              params={{ key: f.key }}
+              {...linkProps}
               className="bg-card rounded-2xl p-4 shadow-card active:scale-[0.98] transition"
             >
               <div
