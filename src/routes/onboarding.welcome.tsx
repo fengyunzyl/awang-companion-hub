@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import mascot from "@/assets/awang-mascot.png";
 
 export const Route = createFileRoute("/onboarding/welcome")({
   component: Welcome,
@@ -8,9 +9,9 @@ export const Route = createFileRoute("/onboarding/welcome")({
 
 function Welcome() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-primary px-8 py-16">
+    <div className="min-h-screen flex flex-col px-8 py-16" style={{ background: "linear-gradient(180deg, #fff7e8 0%, #fffaf0 100%)" }}>
       <div className="flex-1 flex flex-col justify-center">
-        <div className="text-7xl mb-8">👋</div>
+        <img src={mascot} alt="阿旺" className="w-40 h-40 object-contain mb-8 -ml-2" />
         <h1 className="font-bold text-text-primary leading-tight mb-4 text-2xl">
           嗨,我是阿旺
         </h1>
