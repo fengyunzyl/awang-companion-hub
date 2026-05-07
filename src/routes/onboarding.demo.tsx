@@ -40,7 +40,7 @@ function Demo() {
   useEffect(() => {
     if (done) return;
     const next = script[count];
-    const delay = next?.type === "typing" ? 700 : 900;
+    const delay = next?.type === "typing" ? 300 : 400;
     const t = setTimeout(() => setCount((c) => c + 1), delay);
     return () => clearTimeout(t);
   }, [count, done]);
