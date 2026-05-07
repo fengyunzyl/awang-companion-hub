@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_tabs/mine")({
 
 function Mine() {
   return (
-    <div className="bg-gradient-primary pt-12 pb-6">
+    <div className="pt-12 pb-6">
       <div className="px-5 flex items-center gap-4 mb-6">
         <div className="w-16 h-16 rounded-full bg-gradient-brand flex items-center justify-center text-3xl shadow-card">
           🐶
