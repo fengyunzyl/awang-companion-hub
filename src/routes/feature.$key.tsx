@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Upload, Sparkles, ImagePlus, ChevronDown, Check } from "lucide-react";
+import { Sparkles, ImagePlus, ChevronDown, Check } from "lucide-react";
 import { PageHeader } from "@/components/aw/PageHeader";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/feature/$key")({
@@ -30,8 +31,9 @@ const MODE_OPTIONS = [
 const TOPIC_OPTIONS = ["日常宣传", "新品上市", "节日促销", "顾客好评"];
 
 const MODELS = [
-  { key: "std", label: "标准版", desc: "10 积分 / 次" },
-  { key: "pro", label: "高清版", desc: "20 积分 / 次" },
+  { key: "std", label: "标准版", desc: "均衡了速度和生成质量", letter: "S", color: "linear-gradient(135deg,#a78bfa,#7c5cff)", recommended: false },
+  { key: "pro", label: "专业版", desc: "速度稍慢,但细节更丰富", letter: "P", color: "linear-gradient(135deg,#34d399,#0fb47a)", recommended: true },
+  { key: "lite", label: "轻量版", desc: "生成速度更快,适合快速预览", letter: "L", color: "linear-gradient(135deg,#fb923c,#f97316)", recommended: false },
 ];
 
 function Feature() {
@@ -56,7 +58,7 @@ function Feature() {
     r.readAsDataURL(f);
   };
 
-  const cost = model === "pro" ? 20 : 10;
+  const cost = 10;
   const remain = 150;
   const canSubmit = !!image;
 
