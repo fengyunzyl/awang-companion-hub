@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Sparkles, ShoppingBag, BookOpen, Layout, Eraser, FileText, Coins, ChevronRight, Users, Gift } from "lucide-react";
+import { useEffect, useState } from "react";
+import mascot from "@/assets/awang-mascot.png";
 
 export const Route = createFileRoute("/_tabs/home")({
   component: Home,
@@ -17,11 +19,36 @@ const features = [
 
 function Home() {
   const points = typeof window !== "undefined" ? localStorage.getItem("aw_points_avail") ?? "100" : "100";
+  const [greeting, setGreeting] = useState("老板，您好 👋");
+  const [bannerIdx, setBannerIdx] = useState(0);
+
+  useEffect(() => {
+    const h = new Date().getHours();
+    if (h >= 5 && h < 11) setGreeting("老板，早上好 ☀️");
+    else if (h >= 11 && h < 14) setGreeting("老板，中午好 🍜");
+    else if (h >= 14 && h < 18) setGreeting("老板，下午好 ☕️");
+    else if (h >= 18 && h < 23) setGreeting("老板，晚上好 🌙");
+    else setGreeting("老板，辛苦啦 🌛");
+  }, []);
+
+  const banners = [
+    { text: "阿旺今天已帮 1,238 位老板生成图文 ✨", to: "/moments/create" as const },
+    { text: "笔记没流量？点我用 AI 做爆款封面 👉", to: "/moments/create" as const },
+    { text: "中秋将至，要不要做几张应景海报？🥮", to: "/moments/create" as const },
+  ];
+
+  useEffect(() => {
+    const t = setInterval(() => setBannerIdx((i) => (i + 1) % banners.length), 4000);
+    return () => clearInterval(t);
+  }, [banners.length]);
+
+  const banner = banners[bannerIdx];
+
   return (
     <div className="px-4 pt-3 pb-6 min-h-screen" style={{ background: "#fafafa" }}>
       {/* Top bar */}
       <div className="flex items-center justify-between mb-4 py-[12px]">
-        <div className="font-bold text-text-primary leading-tight text-lg">阿旺</div>
+        <div className="font-bold text-text-primary leading-tight text-lg">{greeting}</div>
         <Link
           to="/points"
           className="flex items-center gap-1.5 bg-gradient-points rounded-full pl-3 pr-1 py-1 shadow-button"
@@ -31,6 +58,24 @@ function Home() {
           <span className="bg-white/90 text-primary text-xs font-semibold rounded-full px-2 py-0.5">获取</span>
         </Link>
       </div>
+
+      {/* Awang banner — mascot + speech bubble, auto rotating */}
+      <Link
+        to={banner.to}
+        className="flex items-center gap-2 mb-4 active:scale-[0.99] transition"
+      >
+        <img src={mascot} alt="阿旺" className="w-12 h-12 object-contain shrink-0" />
+        <div
+          className="relative flex-1 rounded-2xl px-4 py-3 text-white text-sm leading-snug shadow-card"
+          style={{ background: "var(--gradient-brand, linear-gradient(135deg,#fc9730,#ffb866))" }}
+        >
+          <span
+            className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rotate-45"
+            style={{ background: "#fc9730" }}
+          />
+          <span className="relative">{banner.text}</span>
+        </div>
+      </Link>
 
       {/* Features grid */}
       <div className="grid grid-cols-2 gap-3 mb-5">
